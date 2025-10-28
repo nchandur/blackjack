@@ -8,20 +8,22 @@ func NewHand(shoe *Shoe) Hand {
 	hand = append(hand, shoe.Draw())
 	hand = append(hand, shoe.Draw())
 
+	hand.makeOptimum()
+
 	return hand
 }
 
 func (h *Hand) CheckBust() bool {
 
-	return h.findSum() > 21
+	return h.FindSum() > 21
 }
 
 func (h *Hand) CheckBlackjack() bool {
-	return h.findSum() == 21
+	return h.FindSum() == 21
 
 }
 
-func (h *Hand) findSum() int {
+func (h *Hand) FindSum() int {
 	sum := 0
 
 	for _, card := range *h {
@@ -32,6 +34,17 @@ func (h *Hand) findSum() int {
 
 }
 
-func (h *Hand) MakeOptimum() {
+func (h *Hand) makeOptimum() {
 
+	for idx := range *h {
+		if h.FindSum() > 21 && (*h)[idx].Rank == "A" {
+			(*h)[idx].Value = 1
+		}
+	}
+
+}
+
+func (h *Hand) Hit(shoe *Shoe) {
+	(*h) = append((*h), (*shoe).Draw())
+	h.makeOptimum()
 }

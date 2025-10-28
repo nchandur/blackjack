@@ -43,3 +43,18 @@ func (s *Shoe) Display() {
 	}
 
 }
+
+func (s *Shoe) GetRemainingCards() int {
+	sum := 0
+
+	for _, val := range *s {
+		sum += val
+	}
+
+	return sum
+
+}
+
+func (s *Shoe) Reset(n int) Shoe {
+	return NewShoe(n)
+}
