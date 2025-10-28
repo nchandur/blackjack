@@ -1,7 +1,17 @@
 package main
 
-import "fmt"
+import (
+	"fmt"
+
+	"github.com/nchandur/blackjack/models"
+)
 
 func main() {
-	fmt.Println("Welcome to Blackjack")
+
+	shoe := models.NewShoe(10)
+
+	playerHand := models.NewHand(&shoe)
+
+	fmt.Println(playerHand)
+
 }
