@@ -1,3 +1,0 @@
-import play
-
-play.play()
