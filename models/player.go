@@ -33,14 +33,13 @@ func (p *Player) Play(shoe *Shoe) {
 
 	for ok := true; ok; ok = !stop {
 
-		fmt.Printf("%v\tSum: %d\n", p.Hand, p.Hand.FindSum())
+		fmt.Printf("Player Hand: %s\tSum: %d\n", p.String(), p.FindSum())
+
 		if p.CheckBlackjack() {
-			fmt.Println("Blackjack!!!")
 			break
 		}
 
 		if p.CheckBust() {
-			fmt.Println("Bust :(")
 			break
 		}
 
@@ -68,5 +67,4 @@ func (p *Player) Play(shoe *Shoe) {
 		}
 
 	}
-
 }

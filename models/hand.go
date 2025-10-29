@@ -1,5 +1,7 @@
 package models
 
+import "strings"
+
 type Hand []Card
 
 func NewHand(shoe *Shoe) Hand {
@@ -31,5 +33,17 @@ func (h *Hand) MakeOptimum() {
 			(*h)[idx].Value = 1
 		}
 	}
+
+}
+
+func (h *Hand) String() string {
+
+	var builder strings.Builder
+
+	for _, card := range *h {
+		builder.WriteString(card.String())
+	}
+
+	return builder.String()
 
 }
