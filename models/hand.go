@@ -1,6 +1,8 @@
 package models
 
-import "strings"
+import (
+	"strings"
+)
 
 type Hand []Card
 
@@ -39,9 +41,17 @@ func (h *Hand) MakeOptimum() {
 func (h *Hand) String() string {
 
 	var builder strings.Builder
+	var cardLines [][]string
 
-	for _, card := range *h {
-		builder.WriteString(card.String())
+	for _, c := range *h {
+		cardLines = append(cardLines, c.String())
+	}
+
+	for i := 0; i < len(cardLines[0]); i++ {
+		for _, card := range cardLines {
+			builder.WriteString(card[i])
+		}
+		builder.WriteString("\n")
 	}
 
 	return builder.String()

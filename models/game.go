@@ -30,13 +30,13 @@ func NewGame() Game {
 
 func (g *Game) PlayRound() {
 
-	fmt.Printf("Dealer Hand: %s\n", g.Dealer.Hand[0].String())
+	fmt.Printf("Dealer Hand: \n%s\n", g.Dealer.Hand.String())
 
 	g.Player.Play(&g.Shoe)
 	g.Dealer.Play(&g.Shoe)
 
-	fmt.Println("Player Hand: ", g.Player.String(), g.Player.FindSum())
-	fmt.Println("Dealer Hand: ", g.Dealer.String(), g.Dealer.FindSum())
+	fmt.Printf("Player Hand:\n%s\nSum: %d\n", g.Player.String(), g.Player.FindSum())
+	fmt.Printf("Dealer Hand:\n%s\nSum: %d\n", g.Dealer.String(), g.Dealer.FindSum())
 
 	if g.didPlayerWin() {
 		fmt.Println("You won!!")

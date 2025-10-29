@@ -8,6 +8,10 @@ type Card struct {
 	Suit  string
 }
 
-func (c *Card) String() string {
-	return fmt.Sprintf("[%s%s]", c.Rank, c.Suit)
+func (c *Card) String() []string {
+	return []string{
+		"┌───┐",
+		fmt.Sprintf("│%-2s%s│", c.Rank, c.Suit),
+		"└───┘",
+	}
 }
