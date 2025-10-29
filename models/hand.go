@@ -8,19 +8,9 @@ func NewHand(shoe *Shoe) Hand {
 	hand = append(hand, shoe.Draw())
 	hand = append(hand, shoe.Draw())
 
-	hand.makeOptimum()
+	hand.MakeOptimum()
 
 	return hand
-}
-
-func (h *Hand) CheckBust() bool {
-
-	return h.FindSum() > 21
-}
-
-func (h *Hand) CheckBlackjack() bool {
-	return h.FindSum() == 21
-
 }
 
 func (h *Hand) FindSum() int {
@@ -34,7 +24,7 @@ func (h *Hand) FindSum() int {
 
 }
 
-func (h *Hand) makeOptimum() {
+func (h *Hand) MakeOptimum() {
 
 	for idx := range *h {
 		if h.FindSum() > 21 && (*h)[idx].Rank == "A" {
@@ -42,9 +32,4 @@ func (h *Hand) makeOptimum() {
 		}
 	}
 
-}
-
-func (h *Hand) Hit(shoe *Shoe) {
-	(*h) = append((*h), (*shoe).Draw())
-	h.makeOptimum()
 }
