@@ -39,10 +39,12 @@ func (g *Game) PlayRound() {
 	fmt.Println("Dealer Hand: ", g.Dealer.String(), g.Dealer.FindSum())
 
 	if g.didPlayerWin() {
-		g.Wins++
+		fmt.Println("You won!!")
+		return
 	}
 
-	g.Rounds++
+	fmt.Println("You lost :(")
+
 }
 
 func (g *Game) didPlayerWin() bool {

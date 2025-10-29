@@ -60,8 +60,6 @@ func (p *Player) Play(shoe *Shoe) {
 		case "d", "double":
 			p.Hit(shoe)
 			stop = true
-		case "q", "quit":
-			stop = true
 		default:
 			fmt.Println("invalid input")
 		}
