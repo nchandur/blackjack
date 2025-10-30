@@ -1,8 +1,6 @@
 package models
 
-import (
-	"fmt"
-)
+import "fmt"
 
 type Game struct {
 	Player
@@ -30,41 +28,54 @@ func NewGame() Game {
 
 func (g *Game) PlayRound() {
 
-	fmt.Printf("Dealer Hand: \n%s\n", g.Dealer.Hand.String())
-
 	g.Player.Play(&g.Shoe)
+
 	g.Dealer.Play(&g.Shoe)
 
-	fmt.Printf("Player Hand:\n%s\nSum: %d\n", g.Player.String(), g.Player.FindSum())
-	fmt.Printf("Dealer Hand:\n%s\nSum: %d\n", g.Dealer.String(), g.Dealer.FindSum())
+	fmt.Printf("\n--------------------------------------------------------------------------\n")
+	fmt.Printf("Dealer Hand: \n%s", g.Dealer.Hand.String())
+	fmt.Printf("Player Hand: \n%s", g.Player.Hand.String())
 
-	if g.didPlayerWin() {
-		fmt.Println("You won!!")
-		return
+	switch g.didPlayerWin() {
+	case 1:
+		fmt.Println("Player Won :)")
+		g.Wins++
+	case -1:
+		fmt.Println("Player Lost :(")
+	case 0:
+		fmt.Println("Push")
 	}
 
-	fmt.Println("You lost :(")
+	g.Rounds++
 
 }
 
-func (g *Game) didPlayerWin() bool {
-
-	if g.Player.CheckBlackjack() {
-		return true
-	}
+func (g *Game) didPlayerWin() int32 {
 
 	if g.Player.CheckBust() {
-		return false
-	}
-
-	if g.Dealer.CheckBlackjack() {
-		return false
+		return -1
 	}
 
 	if g.Dealer.CheckBust() {
-		return true
+		return 1
 	}
 
-	return g.Player.FindSum() > g.Dealer.FindSum()
+	if g.Player.FindSum() == g.Dealer.FindSum() {
+		return 0
+	}
+
+	if g.Player.CheckBlackjack() {
+		return 1
+	}
+
+	if g.Dealer.CheckBlackjack() {
+		return -1
+	}
+
+	if g.Player.FindSum() > g.Dealer.FindSum() {
+		return 1
+	}
+
+	return -1
 
 }
