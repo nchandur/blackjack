@@ -11,6 +11,8 @@ type Game struct {
 	Shoe
 	Rounds int
 	Wins   int
+	Losses int
+	Pushes int
 }
 
 func NewGame() Game {
@@ -25,6 +27,8 @@ func NewGame() Game {
 		Shoe:   shoe,
 		Rounds: 0,
 		Wins:   0,
+		Losses: 0,
+		Pushes: 0,
 	}
 
 }
@@ -35,7 +39,7 @@ func (g *Game) Play() {
 		action := g.PlayRound()
 
 		if action == "q" {
-			fmt.Printf("\n\nGame Report: \n%s\n\n", g.GetReport())
+			fmt.Printf("\n\nSession Report: \n%s\n\n", g.GetReport())
 			break
 		}
 
@@ -45,7 +49,7 @@ func (g *Game) Play() {
 
 func (g *Game) PlayRound() string {
 
-	fmt.Printf("Dealer Card:\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
+	fmt.Printf("Dealer Hand\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
 	action := g.Player.Play(&g.Shoe)
 
@@ -55,18 +59,18 @@ func (g *Game) PlayRound() string {
 
 	g.Dealer.Play(&g.Shoe)
 
-	fmt.Printf("\n--------------------------------------------------------------------------\n")
-	fmt.Printf("Dealer Hand: \n%s", g.Dealer.Hand.String())
-	fmt.Printf("Player Hand: \n%s", g.Player.Hand.String())
+	fmt.Printf("Final\nDealer Hand\n%sPlayer Hand\n%s", g.Dealer.Hand.String(), g.Player.Hand.String())
 
 	switch g.outcome() {
 	case 1:
-		fmt.Println("Player Won :)")
+		fmt.Printf("Player Won :)\n\n")
 		g.Wins++
 	case -1:
-		fmt.Println("Player Lost :(")
+		fmt.Printf("Player Lost :(\n\n")
+		g.Losses++
 	case 0:
-		fmt.Println("Push")
+		fmt.Printf("Push\n\n")
+		g.Pushes++
 	}
 
 	g.Rounds++
@@ -110,6 +114,6 @@ func (g *Game) outcome() int32 {
 
 func (g *Game) GetReport() string {
 
-	return fmt.Sprintf("Rounds played this session: %d\nRounds won: %d\n", g.Rounds, g.Wins)
+	return fmt.Sprintf("Rounds played: %d\nRounds won: %d\nRounds Lost: %d\nRounds Pushed: %d\n", g.Rounds, g.Wins, g.Losses, g.Pushes)
 
 }

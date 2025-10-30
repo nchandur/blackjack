@@ -33,7 +33,7 @@ func (p *Player) Play(shoe *Shoe) string {
 
 	for ok := true; ok; ok = !stop {
 
-		fmt.Printf("Player Hand:\n%sSum: %d\n", p.String(), p.FindSum())
+		fmt.Printf("Player Hand\n%sSum: %d\n", p.Hand.String(), p.Hand.FindSum())
 
 		if p.CheckBlackjack() {
 			break
@@ -43,7 +43,7 @@ func (p *Player) Play(shoe *Shoe) string {
 			break
 		}
 
-		fmt.Printf("Your move (h/s/d): ")
+		fmt.Printf("Your move (h/s/d/q): ")
 		input, err := reader.ReadString('\n')
 
 		if err != nil {
@@ -58,8 +58,10 @@ func (p *Player) Play(shoe *Shoe) string {
 		case "s", "stand":
 			stop = true
 		case "d", "double":
-			p.Hit(shoe)
-			stop = true
+			if len(p.Hand) == 2 {
+				p.Hit(shoe)
+				stop = true
+			}
 		case "q", "quit":
 			return "q"
 		default:
