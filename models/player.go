@@ -25,7 +25,7 @@ func (p *Player) CheckBlackjack() bool {
 	return p.Hand.FindSum() == 21
 }
 
-func (p *Player) Play(shoe *Shoe) {
+func (p *Player) Play(shoe *Shoe) string {
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -60,9 +60,12 @@ func (p *Player) Play(shoe *Shoe) {
 		case "d", "double":
 			p.Hit(shoe)
 			stop = true
+		case "q", "quit":
+			return "q"
 		default:
 			fmt.Println("invalid input")
 		}
 
 	}
+	return ""
 }

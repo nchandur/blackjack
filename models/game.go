@@ -26,9 +26,28 @@ func NewGame() Game {
 
 }
 
-func (g *Game) PlayRound() {
+func (g *Game) Play() {
 
-	g.Player.Play(&g.Shoe)
+	for {
+		action := g.PlayRound()
+
+		if action == "q" {
+			break
+		}
+
+	}
+
+}
+
+func (g *Game) PlayRound() string {
+
+	fmt.Printf("Dealer Card:\n%s", g.Dealer.Hand.String())
+
+	action := g.Player.Play(&g.Shoe)
+
+	if action == "q" {
+		return action
+	}
 
 	g.Dealer.Play(&g.Shoe)
 
@@ -47,6 +66,11 @@ func (g *Game) PlayRound() {
 	}
 
 	g.Rounds++
+
+	g.Player.Hand = NewHand(&g.Shoe)
+	g.Dealer.Hand = NewHand(&g.Shoe)
+
+	return action
 
 }
 
