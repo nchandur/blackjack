@@ -33,7 +33,7 @@ func (p *Player) Play(shoe *Shoe) string {
 
 	for ok := true; ok; ok = !stop {
 
-		fmt.Printf("Player Hand:\n%s\tSum: %d\n", p.String(), p.FindSum())
+		fmt.Printf("Player Hand:\n%sSum: %d\n", p.String(), p.FindSum())
 
 		if p.CheckBlackjack() {
 			break

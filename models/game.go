@@ -1,6 +1,9 @@
 package models
 
-import "fmt"
+import (
+	"fmt"
+	"strings"
+)
 
 type Game struct {
 	Player
@@ -32,6 +35,7 @@ func (g *Game) Play() {
 		action := g.PlayRound()
 
 		if action == "q" {
+			fmt.Printf("\n\nGame Report: \n%s\n\n", g.GetReport())
 			break
 		}
 
@@ -41,7 +45,7 @@ func (g *Game) Play() {
 
 func (g *Game) PlayRound() string {
 
-	fmt.Printf("Dealer Card:\n%s", g.Dealer.Hand.String())
+	fmt.Printf("Dealer Card:\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
 	action := g.Player.Play(&g.Shoe)
 
@@ -55,7 +59,7 @@ func (g *Game) PlayRound() string {
 	fmt.Printf("Dealer Hand: \n%s", g.Dealer.Hand.String())
 	fmt.Printf("Player Hand: \n%s", g.Player.Hand.String())
 
-	switch g.didPlayerWin() {
+	switch g.outcome() {
 	case 1:
 		fmt.Println("Player Won :)")
 		g.Wins++
@@ -74,7 +78,7 @@ func (g *Game) PlayRound() string {
 
 }
 
-func (g *Game) didPlayerWin() int32 {
+func (g *Game) outcome() int32 {
 
 	if g.Player.CheckBust() {
 		return -1
@@ -101,5 +105,11 @@ func (g *Game) didPlayerWin() int32 {
 	}
 
 	return -1
+
+}
+
+func (g *Game) GetReport() string {
+
+	return fmt.Sprintf("Rounds played this session: %d\nRounds won: %d\n", g.Rounds, g.Wins)
 
 }
