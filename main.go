@@ -1,11 +1,9 @@
 package main
 
-import "github.com/nchandur/blackjack/models"
+import "github.com/nchandur/blackjack/cmd"
 
 func main() {
 
-	game := models.NewGame()
-
-	game.Play()
+	cmd.Execute()
 
 }
