@@ -43,8 +43,15 @@ func NewPlayer(username, password string) (Player, error) {
 
 }
 
+func (p *Player) String() string {
+
+	return fmt.Sprintf("Username: %s\nSign In Status: %t\n", p.Username, p.SignedIn)
+
+}
+
 type PlayerManager interface {
 	SignIn(username, password string) error
+	SignOut(username, password string) error
 	Create(username, password string) error
 	Retrieve(username string) (Player, error)
 	Delete(username, password string) error

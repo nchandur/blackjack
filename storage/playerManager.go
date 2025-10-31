@@ -82,3 +82,16 @@ func (p PlayerManager) SignIn(username, password string) error {
 	return fmt.Errorf("username or password is incorrect")
 
 }
+
+func (p PlayerManager) SignOut(username, password string) error {
+
+	for idx := range *(p.players) {
+		if (*(p.players))[idx].Username == username && (*(p.players))[idx].Password == password {
+			(*(p.players))[idx].SignedIn = false
+			return nil
+		}
+	}
+
+	return fmt.Errorf("username or password is incorrect")
+
+}
