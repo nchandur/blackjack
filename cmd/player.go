@@ -34,8 +34,13 @@ var createCmd = &cobra.Command{
 			return err
 		}
 
-		pm.Create(username, password)
+		err = pm.Create(username, password)
 
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("%s has been successfully created!\n", username)
 		return nil
 	},
 }
@@ -57,8 +62,13 @@ var signInCmd = &cobra.Command{
 			return err
 		}
 
-		pm.SignIn(username, password)
+		err = pm.SignIn(username, password)
 
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("%s has been successfully signed in\n", username)
 		return nil
 	},
 }
@@ -80,8 +90,13 @@ var signOutCmd = &cobra.Command{
 			return err
 		}
 
-		pm.SignOut(username, password)
+		err = pm.SignOut(username, password)
 
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("%s has been successfully signed out\n", username)
 		return nil
 	},
 }
@@ -126,8 +141,13 @@ var deleteCmd = &cobra.Command{
 			return err
 		}
 
-		pm.Delete(username, password)
+		err = pm.Delete(username, password)
 
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("%s has been successfully deleted\n", username)
 		return nil
 	},
 }
