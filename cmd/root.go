@@ -10,8 +10,9 @@ import (
 var RootCmd = &cobra.Command{
 	Use:   "blackjack",
 	Short: "Start playing blackjack",
-	Run: func(cmd *cobra.Command, args []string) {
+	RunE: func(cmd *cobra.Command, args []string) error {
 		fmt.Println("Welcome to Blackjack!!")
+		return nil
 	},
 }
 
@@ -19,4 +20,8 @@ func Execute() {
 	if err := RootCmd.Execute(); err != nil {
 		log.Fatal(err)
 	}
+}
+
+func init() {
+	RootCmd.AddCommand(playCmd)
 }

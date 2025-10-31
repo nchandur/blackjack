@@ -1,0 +1,34 @@
+[
+    {
+        "username": "user123",
+        "password": "abc",
+        "signedIn": false,
+        "games": [
+            {
+                "game_id": 1,
+                "round": {
+                    "played": 0,
+                    "won": 0,
+                    "lost": 0,
+                    "pushed": 0
+                }
+            }
+        ]
+    },
+    {
+        "username": "user456",
+        "password": "def",
+        "signedIn": false,
+        "games": [
+            {
+                "game_id": 1,
+                "round": {
+                    "played": 0,
+                    "won": 0,
+                    "lost": 0,
+                    "pushed": 0
+                }
+            }
+        ]
+    }
+]

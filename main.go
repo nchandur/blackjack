@@ -1,9 +1,17 @@
 package main
 
-import "github.com/nchandur/blackjack/cmd"
+import (
+	"log"
+
+	"github.com/nchandur/blackjack/storage"
+)
 
 func main() {
 
-	cmd.Execute()
+	store, err := storage.Open("blackjack.json")
+
+	if err != nil {
+		log.Fatal(err)
+	}
 
 }

@@ -1,9 +1,11 @@
-package models
+package game
 
 import (
 	"fmt"
 	"strings"
 )
+
+const SHOE_SIZE int = 6
 
 type Game struct {
 	Player
@@ -16,7 +18,7 @@ type Game struct {
 }
 
 func NewGame() Game {
-	shoe := NewShoe(6)
+	shoe := NewShoe(SHOE_SIZE)
 
 	player := Player{NewHand(&shoe)}
 	dealer := Dealer{NewHand(&shoe)}
@@ -36,10 +38,9 @@ func NewGame() Game {
 func (g *Game) Play() {
 
 	for {
-		action := g.PlayRound()
+		action := g.playRound()
 
 		if action == "q" {
-			fmt.Printf("\n\nSession Report: \n%s\n\n", g.GetReport())
 			break
 		}
 
@@ -47,7 +48,7 @@ func (g *Game) Play() {
 
 }
 
-func (g *Game) PlayRound() string {
+func (g *Game) playRound() string {
 
 	fmt.Printf("Dealer Hand\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
@@ -77,6 +78,8 @@ func (g *Game) PlayRound() string {
 
 	g.Player.Hand = NewHand(&g.Shoe)
 	g.Dealer.Hand = NewHand(&g.Shoe)
+
+	g.reset()
 
 	return action
 
@@ -115,5 +118,19 @@ func (g *Game) outcome() int32 {
 func (g *Game) GetReport() string {
 
 	return fmt.Sprintf("Rounds played: %d\nRounds won: %d\nRounds Lost: %d\nRounds Pushed: %d\n", g.Rounds, g.Wins, g.Losses, g.Pushes)
+
+}
+
+func (g *Game) reset() {
+	left := 0
+	total := SHOE_SIZE * 52
+
+	for _, val := range g.Shoe {
+		left += val
+	}
+
+	if float64(left)/float64(total) < 0.2 {
+		g.Shoe = NewShoe(SHOE_SIZE)
+	}
 
 }
