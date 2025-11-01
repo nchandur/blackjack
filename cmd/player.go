@@ -40,6 +40,8 @@ var createCmd = &cobra.Command{
 			return err
 		}
 
+		err = pm.SignIn(username, password)
+
 		fmt.Printf("%s has been successfully created!\n", username)
 		return nil
 	},
