@@ -49,7 +49,7 @@ func (p PlayerManager) Delete(username, password string) error {
 
 	for i, play := range *(p.players) {
 		if play.Username == username {
-			if play.Password == password {
+			if play.VerifyPassword(password) {
 				idx = i
 				break
 			} else {
