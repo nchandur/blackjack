@@ -11,7 +11,7 @@ var playCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		g := game.NewGame()
 
-		g.Play()
+		g = g.Play()
 
 		return nil
 

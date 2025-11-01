@@ -4,11 +4,13 @@ import (
 	"fmt"
 	"log"
 
+	"github.com/nchandur/blackjack/game"
 	"github.com/nchandur/blackjack/player"
 	"github.com/spf13/cobra"
 )
 
 var pm player.PlayerManager
+var gm game.GameManager
 
 var RootCmd = &cobra.Command{
 	Use:   "blackjack",
@@ -19,8 +21,9 @@ var RootCmd = &cobra.Command{
 	},
 }
 
-func Execute(playerManager player.PlayerManager) {
+func Execute(playerManager player.PlayerManager, gameManager game.GameManager) {
 	pm = playerManager
+	gm = gameManager
 
 	if err := RootCmd.Execute(); err != nil {
 		log.Fatal(err)

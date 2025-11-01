@@ -21,8 +21,9 @@ func main() {
 	}
 
 	playerManager := storage.NewPlayerManager(&players)
+	gameManager := storage.NewGameManager(&players)
 
-	cmd.Execute(playerManager)
+	cmd.Execute(playerManager, gameManager)
 
 	store.Save(players)
 

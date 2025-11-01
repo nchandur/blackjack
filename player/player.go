@@ -7,7 +7,7 @@ type Player struct {
 	Password string
 	SignedIn bool `json:"signedIn"`
 	Games    []struct {
-		GameID int `json:"game_id"`
+		GameID int `json:"gameID"`
 		Round  struct {
 			Played int `json:"played"`
 			Won    int `json:"won"`
@@ -31,7 +31,7 @@ func NewPlayer(username, password string) (Player, error) {
 		Password: password,
 		SignedIn: false,
 		Games: make([]struct {
-			GameID int "json:\"game_id\""
+			GameID int "json:\"gameID\""
 			Round  struct {
 				Played int "json:\"played\""
 				Won    int "json:\"won\""
