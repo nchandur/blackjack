@@ -2,19 +2,18 @@ package player
 
 import "fmt"
 
+type Round struct {
+	Played int `json:"played"`
+	Won    int `json:"won"`
+	Lost   int `json:"lost"`
+	Pushed int `json:"pushed"`
+}
+
 type Player struct {
 	Username string `json:"username"`
 	Password string
 	SignedIn bool `json:"signedIn"`
-	Games    []struct {
-		GameID int `json:"gameID"`
-		Round  struct {
-			Played int `json:"played"`
-			Won    int `json:"won"`
-			Lost   int `json:"lost"`
-			Pushed int `json:"pushed"`
-		} `json:"round"`
-	} `json:"games"`
+	Round    `json:"rounds"`
 }
 
 func NewPlayer(username, password string) (Player, error) {
@@ -30,15 +29,7 @@ func NewPlayer(username, password string) (Player, error) {
 		Username: username,
 		Password: password,
 		SignedIn: false,
-		Games: make([]struct {
-			GameID int "json:\"gameID\""
-			Round  struct {
-				Played int "json:\"played\""
-				Won    int "json:\"won\""
-				Lost   int "json:\"lost\""
-				Pushed int "json:\"pushed\""
-			} "json:\"round\""
-		}, 0),
+		Round:    Round{},
 	}, nil
 
 }

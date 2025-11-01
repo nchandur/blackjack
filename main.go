@@ -20,11 +20,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	playerManager := storage.NewPlayerManager(&players)
-	gameManager := storage.NewGameManager(&players)
+	pm := storage.NewPlayerManager(&players)
+	gm := storage.NewGameManager(&players)
 
-	cmd.Execute(playerManager, gameManager)
+	cmd.Execute(pm, gm)
 
 	store.Save(players)
-
 }

@@ -35,7 +35,7 @@ func NewGame() Game {
 
 }
 
-func (g *Game) Play() Game {
+func (g *Game) Play() {
 
 	for {
 		action := g.playRound()
@@ -45,8 +45,6 @@ func (g *Game) Play() Game {
 		}
 
 	}
-
-	return *g
 
 }
 
