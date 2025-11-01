@@ -36,7 +36,7 @@ func NewPlayer(username, password string) (Player, error) {
 
 func (p *Player) String() string {
 
-	return fmt.Sprintf("Username: %s\nSign In Status: %t\n", p.Username, p.SignedIn)
+	return fmt.Sprintf("Username: %s\nSign In Status: %t\nStats: \nRounds Played: %d\nRounds Won: %d\nRounds Lost: %d\nRounds Pushed: %d", p.Username, p.SignedIn, p.Played, p.Won, p.Lost, p.Pushed)
 
 }
 

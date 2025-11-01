@@ -31,7 +31,7 @@ func Execute(playerManager player.PlayerManager, gameManager game.GameManager) {
 }
 
 func init() {
-	RootCmd.AddCommand(playCmd)
+	RootCmd.AddCommand(gameCmd)
 	RootCmd.AddCommand(playerCmd)
 
 	playerCmd.AddCommand(createCmd)
@@ -39,6 +39,8 @@ func init() {
 	playerCmd.AddCommand(signOutCmd)
 	playerCmd.AddCommand(retrieveCmd)
 	playerCmd.AddCommand(deleteCmd)
+
+	gameCmd.AddCommand(playCmd)
 
 	createCmd.Flags().StringP("username", "u", "", "Username. Cannot be empty")
 	createCmd.Flags().StringP("password", "p", "", "Password. Cannot be empty")

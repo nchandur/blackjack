@@ -31,23 +31,27 @@ func (s *Storage) Save(players []player.Player) error {
 }
 
 func (s *Storage) Load(players *[]player.Player) error {
-
 	fileData, err := os.ReadFile(s.Filename)
-
 	if err != nil {
 		if os.IsNotExist(err) {
-			return fmt.Errorf("failed to read file '%s': %w", s.Filename, err)
+			file, createErr := os.Create(s.Filename)
+			if createErr != nil {
+				return fmt.Errorf("failed to create file '%s': %w", s.Filename, createErr)
+			}
+			defer file.Close()
+
+			*players = []player.Player{}
+			return nil
 		}
 		return fmt.Errorf("failed to read file '%s': %w", s.Filename, err)
 	}
 
 	if len(fileData) == 0 {
-		return fmt.Errorf("failed to read file '%s': no bytes received", s.Filename)
+		*players = []player.Player{}
+		return nil
 	}
 
-	err = json.Unmarshal(fileData, &players)
-
-	if err != nil {
+	if err := json.Unmarshal(fileData, players); err != nil {
 		return fmt.Errorf("failed to unmarshal data from '%s': %w", s.Filename, err)
 	}
 
