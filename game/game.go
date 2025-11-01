@@ -1,7 +1,11 @@
 package game
 
 import (
+	"bufio"
 	"fmt"
+	"log"
+	"os"
+	"strconv"
 	"strings"
 )
 
@@ -11,10 +15,11 @@ type Game struct {
 	Player
 	Dealer
 	Shoe
-	Rounds int
-	Wins   int
-	Losses int
-	Pushes int
+	Rounds    int
+	Wins      int
+	Losses    int
+	Pushes    int
+	Buckaroos int
 }
 
 func NewGame() Game {
@@ -24,21 +29,26 @@ func NewGame() Game {
 	dealer := Dealer{NewHand(&shoe)}
 
 	return Game{
-		Player: player,
-		Dealer: dealer,
-		Shoe:   shoe,
-		Rounds: 0,
-		Wins:   0,
-		Losses: 0,
-		Pushes: 0,
+		Player:    player,
+		Dealer:    dealer,
+		Shoe:      shoe,
+		Rounds:    0,
+		Wins:      0,
+		Losses:    0,
+		Pushes:    0,
+		Buckaroos: 0,
 	}
 
 }
 
-func (g *Game) Play() {
+func (g *Game) Play() error {
 
 	for {
-		action := g.playRound()
+		action, err := g.playRound()
+
+		if err != nil {
+			log.Println(err)
+		}
 
 		if action == "q" {
 			break
@@ -46,16 +56,39 @@ func (g *Game) Play() {
 
 	}
 
+	return nil
+
 }
 
-func (g *Game) playRound() string {
+func (g *Game) playRound() (string, error) {
+
+	reader := bufio.NewReader(os.Stdin)
+
+	fmt.Printf("You have %d buckaroos.\nEnter bet amount: ", g.Buckaroos)
+	input, _ := reader.ReadString('\n')
+
+	input = strings.Trim(input, "\n")
+
+	if input == "q" {
+		return "q", nil
+	}
+
+	bet, err := strconv.Atoi(input)
+
+	if err != nil {
+		return "q", fmt.Errorf("failed to play game: invalid bet amount: %v", err)
+	}
+
+	if bet > g.Buckaroos {
+		return "q", fmt.Errorf("failed to play game: insufficient funds")
+	}
 
 	fmt.Printf("Dealer Hand\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
-	action := g.Player.Play(&g.Shoe)
+	action, bet := g.Player.Play(&g.Shoe, bet)
 
 	if action == "q" {
-		return action
+		return action, nil
 	}
 
 	g.Dealer.Play(&g.Shoe)
@@ -66,8 +99,10 @@ func (g *Game) playRound() string {
 	case 1:
 		fmt.Printf("Player Won :)\n\n")
 		g.Wins++
+		g.Buckaroos += bet
 	case -1:
 		fmt.Printf("Player Lost :(\n\n")
+		g.Buckaroos -= bet
 		g.Losses++
 	case 0:
 		fmt.Printf("Push\n\n")
@@ -81,7 +116,7 @@ func (g *Game) playRound() string {
 
 	g.reset()
 
-	return action
+	return action, nil
 
 }
 
@@ -112,12 +147,6 @@ func (g *Game) outcome() int32 {
 	}
 
 	return -1
-
-}
-
-func (g *Game) GetReport() string {
-
-	return fmt.Sprintf("Rounds played: %d\nRounds won: %d\nRounds Lost: %d\nRounds Pushed: %d\n", g.Rounds, g.Wins, g.Losses, g.Pushes)
 
 }
 

@@ -3,7 +3,6 @@ package game
 import (
 	"bufio"
 	"fmt"
-	"log"
 	"os"
 	"strings"
 )
@@ -25,7 +24,7 @@ func (p *Player) CheckBlackjack() bool {
 	return p.Hand.FindSum() == 21
 }
 
-func (p *Player) Play(shoe *Shoe) string {
+func (p *Player) Play(shoe *Shoe, bet int) (string, int) {
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -34,6 +33,10 @@ func (p *Player) Play(shoe *Shoe) string {
 	for ok := true; ok; ok = !stop {
 
 		fmt.Printf("Player Hand\n%sSum: %d\n", p.Hand.String(), p.Hand.FindSum())
+
+		if len(p.Hand) == 2 && p.CheckBlackjack() {
+			bet = (2 * bet) + bet
+		}
 
 		if p.CheckBlackjack() {
 			break
@@ -44,11 +47,7 @@ func (p *Player) Play(shoe *Shoe) string {
 		}
 
 		fmt.Printf("Your move (h/s/d/q): ")
-		input, err := reader.ReadString('\n')
-
-		if err != nil {
-			log.Println(err)
-		}
+		input, _ := reader.ReadString('\n')
 
 		input = strings.ToLower(strings.Trim(input, "\n"))
 
@@ -59,15 +58,16 @@ func (p *Player) Play(shoe *Shoe) string {
 			stop = true
 		case "d", "double":
 			if len(p.Hand) == 2 {
+				bet = 2 * bet
 				p.Hit(shoe)
 				stop = true
 			}
 		case "q", "quit":
-			return "q"
+			return "q", bet
 		default:
 			fmt.Println("invalid input")
 		}
 
 	}
-	return ""
+	return "", bet
 }
