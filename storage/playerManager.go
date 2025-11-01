@@ -14,7 +14,28 @@ func NewPlayerManager(players *[]player.Player) PlayerManager {
 	return PlayerManager{players: players}
 }
 
+func (p PlayerManager) getHouseStats(players *[]player.Player) player.Player {
+	house := player.Player{}
+
+	for _, p := range *players {
+		house.Round.Played += p.Played
+		house.Round.Lost += p.Won
+		house.Round.Won += p.Lost
+		house.Round.Pushed += p.Pushed
+		house.Buckaroos += (player.BUY_IN - p.Buckaroos)
+	}
+
+	house.Username = "house"
+	house.Password = ""
+	return house
+}
+
 func (p PlayerManager) Retrieve(username string) (player.Player, error) {
+
+	if username == "house" {
+		return p.getHouseStats(p.players), nil
+	}
+
 	for _, play := range *(p.players) {
 		if play.Username == username {
 			return play, nil
