@@ -85,7 +85,7 @@ func (g *Game) playRound() (string, error) {
 
 	fmt.Printf("Dealer Hand\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
-	action, bet := g.Player.Play(&g.Shoe, bet)
+	action, bet := g.Player.Play(&g.Shoe, bet, g.Buckaroos)
 
 	if action == "q" {
 		return action, nil

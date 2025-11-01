@@ -24,7 +24,7 @@ func (p *Player) CheckBlackjack() bool {
 	return p.Hand.FindSum() == 21
 }
 
-func (p *Player) Play(shoe *Shoe, bet int) (string, int) {
+func (p *Player) Play(shoe *Shoe, bet, funds int) (string, int) {
 
 	reader := bufio.NewReader(os.Stdin)
 
@@ -57,7 +57,7 @@ func (p *Player) Play(shoe *Shoe, bet int) (string, int) {
 		case "s", "stand":
 			stop = true
 		case "d", "double":
-			if len(p.Hand) == 2 {
+			if (len(p.Hand) == 2) && (2*bet < funds) {
 				bet = 2 * bet
 				p.Hit(shoe)
 				stop = true

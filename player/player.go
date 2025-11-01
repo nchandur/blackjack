@@ -6,6 +6,8 @@ import (
 	"golang.org/x/crypto/bcrypt"
 )
 
+const BUY_IN int = 1000
+
 type Round struct {
 	Played int `json:"played"`
 	Won    int `json:"won"`
@@ -34,7 +36,7 @@ func NewPlayer(username, password string) (Player, error) {
 		Username:  username,
 		SignedIn:  false,
 		Round:     Round{},
-		Buckaroos: 1000,
+		Buckaroos: BUY_IN,
 	}
 
 	hash, err := play.encryptPassword(password)
