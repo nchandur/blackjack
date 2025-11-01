@@ -72,7 +72,7 @@ func (p PlayerManager) SignIn(username, password string) error {
 	success := false
 
 	for idx := range *(p.players) {
-		if (*(p.players))[idx].Username == username && (*(p.players))[idx].Password == password {
+		if (*(p.players))[idx].Username == username && (*(p.players))[idx].VerifyPassword(password) {
 			(*(p.players))[idx].SignedIn = true
 			success = true
 		} else {
@@ -94,7 +94,7 @@ func (p PlayerManager) SignOut(username, password string) error {
 	success := false
 
 	for idx := range *(p.players) {
-		if (*(p.players))[idx].Username == username && (*(p.players))[idx].Password == password {
+		if (*(p.players))[idx].Username == username && (*(p.players))[idx].VerifyPassword(password) {
 			(*(p.players))[idx].SignedIn = false
 			success = true
 		}

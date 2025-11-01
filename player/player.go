@@ -1,6 +1,10 @@
 package player
 
-import "fmt"
+import (
+	"fmt"
+
+	"golang.org/x/crypto/bcrypt"
+)
 
 type Round struct {
 	Played int `json:"played"`
@@ -19,21 +23,46 @@ type Player struct {
 
 func NewPlayer(username, password string) (Player, error) {
 	if username == "" {
-		return Player{}, fmt.Errorf("username cannot be empty")
+		return Player{}, fmt.Errorf("failed to create player: username cannot be empty")
 	}
 
 	if password == "" {
-		return Player{}, fmt.Errorf("password cannot be empty")
+		return Player{}, fmt.Errorf("failed to create player: password cannot be empty")
 	}
 
-	return Player{
+	play := Player{
 		Username:  username,
-		Password:  password,
 		SignedIn:  false,
 		Round:     Round{},
 		Buckaroos: 1000,
-	}, nil
+	}
 
+	hash, err := play.encryptPassword(password)
+
+	if err != nil {
+		return Player{}, fmt.Errorf("failed to create player: %v", err)
+	}
+
+	play.Password = hash
+
+	return play, nil
+
+}
+
+func (p Player) encryptPassword(password string) (string, error) {
+	hash, err := bcrypt.GenerateFromPassword([]byte(password), 5)
+
+	if err != nil {
+		return "", err
+	}
+
+	return string(hash), nil
+
+}
+
+func (p Player) VerifyPassword(password string) bool {
+	err := bcrypt.CompareHashAndPassword([]byte(p.Password), []byte(password))
+	return err == nil
 }
 
 func (p *Player) String() string {
