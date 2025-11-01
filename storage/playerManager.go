@@ -69,29 +69,40 @@ func (p PlayerManager) Delete(username, password string) error {
 
 func (p PlayerManager) SignIn(username, password string) error {
 
+	success := false
+
 	for idx := range *(p.players) {
 		if (*(p.players))[idx].Username == username && (*(p.players))[idx].Password == password {
 			(*(p.players))[idx].SignedIn = true
-			return nil
+			success = true
 		} else {
 			(*(p.players))[idx].SignedIn = false
 
 		}
 	}
 
-	return fmt.Errorf("username or password is incorrect")
+	if !success {
+		return fmt.Errorf("username or password is incorrect")
+	}
+
+	return nil
 
 }
 
 func (p PlayerManager) SignOut(username, password string) error {
 
+	success := false
+
 	for idx := range *(p.players) {
 		if (*(p.players))[idx].Username == username && (*(p.players))[idx].Password == password {
 			(*(p.players))[idx].SignedIn = false
-			return nil
+			success = true
 		}
 	}
 
-	return fmt.Errorf("username or password is incorrect")
+	if !success {
+		return fmt.Errorf("username or password is incorrect")
+	}
 
+	return nil
 }
