@@ -1,0 +1,59 @@
+package storage
+
+import (
+	"encoding/json"
+	"fmt"
+	"os"
+
+	"github.com/nchandur/blackjack/player"
+)
+
+type Storage struct {
+	Filename string
+}
+
+func NewStorage(filename string) *Storage {
+	storage := Storage{Filename: filename}
+
+	return &storage
+}
+
+func (s *Storage) Save(players []player.Player) error {
+
+	fileData, err := json.MarshalIndent(players, "", "\t")
+
+	if err != nil {
+		return err
+	}
+
+	return os.WriteFile(s.Filename, fileData, 0644)
+
+}
+
+func (s *Storage) Load(players *[]player.Player) error {
+	fileData, err := os.ReadFile(s.Filename)
+	if err != nil {
+		if os.IsNotExist(err) {
+			file, createErr := os.Create(s.Filename)
+			if createErr != nil {
+				return fmt.Errorf("failed to create file '%s': %w", s.Filename, createErr)
+			}
+			defer file.Close()
+
+			*players = []player.Player{}
+			return nil
+		}
+		return fmt.Errorf("failed to read file '%s': %w", s.Filename, err)
+	}
+
+	if len(fileData) == 0 {
+		*players = []player.Player{}
+		return nil
+	}
+
+	if err := json.Unmarshal(fileData, players); err != nil {
+		return fmt.Errorf("failed to unmarshal data from '%s': %w", s.Filename, err)
+	}
+
+	return nil
+}
