@@ -34,7 +34,7 @@ func (g GameManager) Save(game game.Game) error {
 	(*g.players)[g.signedIn].Round.Won = game.Wins
 	(*g.players)[g.signedIn].Round.Lost = game.Losses
 	(*g.players)[g.signedIn].Round.Pushed = game.Pushes
-	(*g.players)[g.signedIn].Buckaroonies = game.Buckaroonies
+	(*g.players)[g.signedIn].Kaasu = game.Kaasu
 
 	return nil
 }
@@ -51,7 +51,7 @@ func (g GameManager) Load() (game.Game, error) {
 	toLoad.Wins = (*g.players)[g.signedIn].Round.Won
 	toLoad.Losses = (*g.players)[g.signedIn].Round.Lost
 	toLoad.Pushes = (*g.players)[g.signedIn].Round.Pushed
-	toLoad.Buckaroonies = (*g.players)[g.signedIn].Buckaroonies
+	toLoad.Kaasu = (*g.players)[g.signedIn].Kaasu
 
 	return toLoad, nil
 }

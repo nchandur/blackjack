@@ -19,7 +19,7 @@ type Game struct {
 	Wins      int
 	Losses    int
 	Pushes    int
-	Buckaroonies int
+	Kaasu int
 }
 
 func NewGame() Game {
@@ -36,7 +36,7 @@ func NewGame() Game {
 		Wins:      0,
 		Losses:    0,
 		Pushes:    0,
-		Buckaroonies: 0,
+		Kaasu: 0,
 	}
 
 }
@@ -64,7 +64,7 @@ func (g *Game) playRound() (string, error) {
 
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Printf("You have %d buckaroonies.\nEnter bet amount: ", g.Buckaroonies)
+	fmt.Printf("You have %d kaasu.\nEnter bet amount: ", g.Kaasu)
 	input, _ := reader.ReadString('\n')
 
 	input = strings.Trim(input, "\n")
@@ -79,13 +79,13 @@ func (g *Game) playRound() (string, error) {
 		return "q", fmt.Errorf("failed to play game: invalid bet amount: %v", err)
 	}
 
-	if bet > g.Buckaroonies {
+	if bet > g.Kaasu {
 		return "q", fmt.Errorf("failed to play game: insufficient funds")
 	}
 
 	fmt.Printf("Dealer Hand\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
-	action, bet := g.Player.Play(&g.Shoe, bet, g.Buckaroonies)
+	action, bet := g.Player.Play(&g.Shoe, bet, g.Kaasu)
 
 	if action == "q" {
 		return action, nil
@@ -99,10 +99,10 @@ func (g *Game) playRound() (string, error) {
 	case 1:
 		fmt.Printf("Player Won :)\n\n")
 		g.Wins++
-		g.Buckaroonies += bet
+		g.Kaasu += bet
 	case -1:
 		fmt.Printf("Player Lost :(\n\n")
-		g.Buckaroonies -= bet
+		g.Kaasu -= bet
 		g.Losses++
 	case 0:
 		fmt.Printf("Push\n\n")

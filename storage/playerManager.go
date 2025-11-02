@@ -22,7 +22,7 @@ func (p PlayerManager) getHouseStats(players *[]player.Player) player.Player {
 		house.Round.Lost += p.Won
 		house.Round.Won += p.Lost
 		house.Round.Pushed += p.Pushed
-		house.Buckaroonies += (player.BUY_IN - p.Buckaroonies)
+		house.Kaasu += (player.BUY_IN - p.Kaasu)
 	}
 
 	house.Username = "house"
