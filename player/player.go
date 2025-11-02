@@ -16,11 +16,11 @@ type Round struct {
 }
 
 type Player struct {
-	Username  string `json:"username"`
-	Password  string
-	SignedIn  bool `json:"signedIn"`
-	Round     `json:"rounds"`
-	Buckaroos int `json:"buckaroos"`
+	Username string `json:"username"`
+	Password string
+	SignedIn bool `json:"signedIn"`
+	Round    `json:"rounds"`
+	Kaasu    int `json:"kaasu"`
 }
 
 func NewPlayer(username, password string) (Player, error) {
@@ -33,10 +33,10 @@ func NewPlayer(username, password string) (Player, error) {
 	}
 
 	play := Player{
-		Username:  username,
-		SignedIn:  false,
-		Round:     Round{},
-		Buckaroos: BUY_IN,
+		Username: username,
+		SignedIn: false,
+		Round:    Round{},
+		Kaasu:    BUY_IN,
 	}
 
 	hash, err := play.encryptPassword(password)
@@ -69,7 +69,7 @@ func (p Player) VerifyPassword(password string) bool {
 
 func (p *Player) String() string {
 
-	return fmt.Sprintf("Username: %s\nSign In Status: %t\n\nStats: \nRounds Played: %d\nRounds Won: %d\nRounds Lost: %d\nRounds Pushed: %d\n\nBuckaroos: %d", p.Username, p.SignedIn, p.Played, p.Won, p.Lost, p.Pushed, p.Buckaroos)
+	return fmt.Sprintf("Username: %s\nSign In Status: %t\n\nStats: \nRounds Played: %d\nRounds Won: %d\nRounds Lost: %d\nRounds Pushed: %d\n\nKaasu: %d", p.Username, p.SignedIn, p.Played, p.Won, p.Lost, p.Pushed, p.Kaasu)
 
 }
 
