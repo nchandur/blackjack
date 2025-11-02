@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/nchandur/blackjack/player"
+	"github.com/nchandur/blackjack/users"
 )
 
 type Storage struct {
@@ -18,7 +18,7 @@ func NewStorage(filename string) *Storage {
 	return &storage
 }
 
-func (s *Storage) Save(players []player.Player) error {
+func (s *Storage) Save(players []users.User) error {
 
 	fileData, err := json.MarshalIndent(players, "", "\t")
 
@@ -30,7 +30,7 @@ func (s *Storage) Save(players []player.Player) error {
 
 }
 
-func (s *Storage) Load(players *[]player.Player) error {
+func (s *Storage) Load(players *[]users.User) error {
 	fileData, err := os.ReadFile(s.Filename)
 	if err != nil {
 		if os.IsNotExist(err) {
@@ -40,14 +40,14 @@ func (s *Storage) Load(players *[]player.Player) error {
 			}
 			defer file.Close()
 
-			*players = []player.Player{}
+			*players = []users.User{}
 			return nil
 		}
 		return fmt.Errorf("failed to read file '%s': %w", s.Filename, err)
 	}
 
 	if len(fileData) == 0 {
-		*players = []player.Player{}
+		*players = []users.User{}
 		return nil
 	}
 

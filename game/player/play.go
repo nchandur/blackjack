@@ -1,32 +1,14 @@
-package game
+package player
 
 import (
 	"bufio"
 	"fmt"
-	"os"
 	"strings"
+
+	"github.com/nchandur/blackjack/game/structs"
 )
 
-type Player struct {
-	Hand
-}
-
-func (p *Player) Hit(shoe *Shoe) {
-	p.Hand = append(p.Hand, shoe.Draw())
-	p.Hand.MakeOptimum()
-}
-
-func (p *Player) CheckBust() bool {
-	return p.Hand.FindSum() > 21
-}
-
-func (p *Player) CheckBlackjack() bool {
-	return p.Hand.FindSum() == 21
-}
-
-func (p *Player) Play(shoe *Shoe, bet, funds int) (string, int) {
-
-	reader := bufio.NewReader(os.Stdin)
+func (p *Player) Play(reader *bufio.Reader, shoe *structs.Shoe, bet, funds int) (string, int) {
 
 	stop := false
 
@@ -35,7 +17,7 @@ func (p *Player) Play(shoe *Shoe, bet, funds int) (string, int) {
 		fmt.Printf("Player Hand\n%sSum: %d\n", p.Hand.String(), p.Hand.FindSum())
 
 		if len(p.Hand) == 2 && p.CheckBlackjack() {
-			bet = (2 * bet) + bet
+			bet = (bet) + (bet / 2)
 		}
 
 		if p.CheckBlackjack() {

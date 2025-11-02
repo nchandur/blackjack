@@ -6,12 +6,12 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var playerCmd = &cobra.Command{
-	Use:   "player",
-	Short: "Player Management",
+var userCmd = &cobra.Command{
+	Use:   "user",
+	Short: "User Management",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
-		fmt.Println("This is the Player Management Section")
+		fmt.Println("This is the User Management Section")
 
 		return nil
 	},
@@ -19,7 +19,7 @@ var playerCmd = &cobra.Command{
 
 var createCmd = &cobra.Command{
 	Use:   "create",
-	Short: "Create new player",
+	Short: "Create new user",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		username, err := cmd.Flags().GetString("username")
@@ -34,13 +34,13 @@ var createCmd = &cobra.Command{
 			return err
 		}
 
-		err = pm.Create(username, password)
+		err = um.Create(username, password)
 
 		if err != nil {
 			return err
 		}
 
-		err = pm.SignIn(username, password)
+		err = um.SignIn(username, password)
 
 		fmt.Printf("%s has been successfully created!\n", username)
 		return nil
@@ -49,7 +49,7 @@ var createCmd = &cobra.Command{
 
 var signInCmd = &cobra.Command{
 	Use:   "signin",
-	Short: "Sign in new player",
+	Short: "Sign in user",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		username, err := cmd.Flags().GetString("username")
@@ -64,7 +64,7 @@ var signInCmd = &cobra.Command{
 			return err
 		}
 
-		err = pm.SignIn(username, password)
+		err = um.SignIn(username, password)
 
 		if err != nil {
 			return err
@@ -77,7 +77,7 @@ var signInCmd = &cobra.Command{
 
 var signOutCmd = &cobra.Command{
 	Use:   "signout",
-	Short: "Sign out",
+	Short: "Sign out user",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		username, err := cmd.Flags().GetString("username")
@@ -92,7 +92,7 @@ var signOutCmd = &cobra.Command{
 			return err
 		}
 
-		err = pm.SignOut(username, password)
+		err = um.SignOut(username, password)
 
 		if err != nil {
 			return err
@@ -105,7 +105,7 @@ var signOutCmd = &cobra.Command{
 
 var retrieveCmd = &cobra.Command{
 	Use:   "retrieve",
-	Short: "retrieve existing player",
+	Short: "retrieve existing user",
 	RunE: func(cmd *cobra.Command, args []string) error {
 
 		username, err := cmd.Flags().GetString("username")
@@ -114,7 +114,7 @@ var retrieveCmd = &cobra.Command{
 			return err
 		}
 
-		play, err := pm.Retrieve(username)
+		play, err := um.Retrieve(username)
 
 		if err != nil {
 			return err
@@ -143,7 +143,7 @@ var deleteCmd = &cobra.Command{
 			return err
 		}
 
-		err = pm.Delete(username, password)
+		err = um.Delete(username, password)
 
 		if err != nil {
 			return err

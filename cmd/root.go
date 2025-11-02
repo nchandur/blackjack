@@ -5,11 +5,11 @@ import (
 	"log"
 
 	"github.com/nchandur/blackjack/game"
-	"github.com/nchandur/blackjack/player"
+	"github.com/nchandur/blackjack/users"
 	"github.com/spf13/cobra"
 )
 
-var pm player.PlayerManager
+var um users.UserManager
 var gm game.GameManager
 
 var RootCmd = &cobra.Command{
@@ -21,8 +21,8 @@ var RootCmd = &cobra.Command{
 	},
 }
 
-func Execute(playerManager player.PlayerManager, gameManager game.GameManager) {
-	pm = playerManager
+func Execute(userManager users.UserManager, gameManager game.GameManager) {
+	um = userManager
 	gm = gameManager
 
 	if err := RootCmd.Execute(); err != nil {
@@ -32,13 +32,13 @@ func Execute(playerManager player.PlayerManager, gameManager game.GameManager) {
 
 func init() {
 	RootCmd.AddCommand(gameCmd)
-	RootCmd.AddCommand(playerCmd)
+	RootCmd.AddCommand(userCmd)
 
-	playerCmd.AddCommand(createCmd)
-	playerCmd.AddCommand(signInCmd)
-	playerCmd.AddCommand(signOutCmd)
-	playerCmd.AddCommand(retrieveCmd)
-	playerCmd.AddCommand(deleteCmd)
+	userCmd.AddCommand(createCmd)
+	userCmd.AddCommand(signInCmd)
+	userCmd.AddCommand(signOutCmd)
+	userCmd.AddCommand(retrieveCmd)
+	userCmd.AddCommand(deleteCmd)
 
 	gameCmd.AddCommand(playCmd)
 
