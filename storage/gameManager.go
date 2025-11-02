@@ -4,19 +4,19 @@ import (
 	"fmt"
 
 	"github.com/nchandur/blackjack/game"
-	"github.com/nchandur/blackjack/player"
+	"github.com/nchandur/blackjack/users"
 )
 
 type GameManager struct {
-	players  *[]player.Player
+	users    *[]users.User
 	signedIn int
 }
 
-func NewGameManager(players *[]player.Player) GameManager {
-	gameManager := GameManager{players: players, signedIn: -1}
+func NewGameManager(users *[]users.User) GameManager {
+	gameManager := GameManager{users: users, signedIn: -1}
 
-	for idx := range *players {
-		if (*players)[idx].SignedIn {
+	for idx := range *users {
+		if (*users)[idx].SignedIn {
 			gameManager.signedIn = idx
 		}
 	}
@@ -30,11 +30,11 @@ func (g GameManager) Save(game game.Game) error {
 		return fmt.Errorf("please sign in")
 	}
 
-	(*g.players)[g.signedIn].Round.Played = game.Rounds
-	(*g.players)[g.signedIn].Round.Won = game.Wins
-	(*g.players)[g.signedIn].Round.Lost = game.Losses
-	(*g.players)[g.signedIn].Round.Pushed = game.Pushes
-	(*g.players)[g.signedIn].Kaasu = game.Kaasu
+	(*g.users)[g.signedIn].Round.Played = game.Rounds
+	(*g.users)[g.signedIn].Round.Won = game.Wins
+	(*g.users)[g.signedIn].Round.Lost = game.Losses
+	(*g.users)[g.signedIn].Round.Pushed = game.Pushes
+	(*g.users)[g.signedIn].Kaasu = game.Kaasu
 
 	return nil
 }
@@ -47,11 +47,11 @@ func (g GameManager) Load() (game.Game, error) {
 		return toLoad, fmt.Errorf("please sign in")
 	}
 
-	toLoad.Rounds = (*g.players)[g.signedIn].Round.Played
-	toLoad.Wins = (*g.players)[g.signedIn].Round.Won
-	toLoad.Losses = (*g.players)[g.signedIn].Round.Lost
-	toLoad.Pushes = (*g.players)[g.signedIn].Round.Pushed
-	toLoad.Kaasu = (*g.players)[g.signedIn].Kaasu
+	toLoad.Rounds = (*g.users)[g.signedIn].Round.Played
+	toLoad.Wins = (*g.users)[g.signedIn].Round.Won
+	toLoad.Losses = (*g.users)[g.signedIn].Round.Lost
+	toLoad.Pushes = (*g.users)[g.signedIn].Round.Pushed
+	toLoad.Kaasu = (*g.users)[g.signedIn].Kaasu
 
 	return toLoad, nil
 }

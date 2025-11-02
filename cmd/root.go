@@ -5,24 +5,28 @@ import (
 	"log"
 
 	"github.com/nchandur/blackjack/game"
-	"github.com/nchandur/blackjack/player"
+	"github.com/nchandur/blackjack/users"
 	"github.com/spf13/cobra"
 )
 
-var pm player.PlayerManager
+var um users.UserManager
 var gm game.GameManager
 
 var RootCmd = &cobra.Command{
 	Use:   "blackjack",
-	Short: "Start playing blackjack",
+	Short: "Blackjack CLI game",
+	Long: `blackjack is a command-line implementation of the classic card game.
+You can play against the dealer using standard Blackjack rules. 
+`,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("Welcome to Blackjack!!")
+		fmt.Printf(`Welcome to Blackjack CLI game!!!`)
+
 		return nil
 	},
 }
 
-func Execute(playerManager player.PlayerManager, gameManager game.GameManager) {
-	pm = playerManager
+func Execute(userManager users.UserManager, gameManager game.GameManager) {
+	um = userManager
 	gm = gameManager
 
 	if err := RootCmd.Execute(); err != nil {
@@ -32,28 +36,38 @@ func Execute(playerManager player.PlayerManager, gameManager game.GameManager) {
 
 func init() {
 	RootCmd.AddCommand(gameCmd)
-	RootCmd.AddCommand(playerCmd)
+	RootCmd.AddCommand(userCmd)
 
-	playerCmd.AddCommand(createCmd)
-	playerCmd.AddCommand(signInCmd)
-	playerCmd.AddCommand(signOutCmd)
-	playerCmd.AddCommand(retrieveCmd)
-	playerCmd.AddCommand(deleteCmd)
+	userCmd.AddCommand(createCmd)
+	userCmd.AddCommand(signInCmd)
+	userCmd.AddCommand(signOutCmd)
+	userCmd.AddCommand(retrieveCmd)
+	userCmd.AddCommand(deleteCmd)
 
 	gameCmd.AddCommand(playCmd)
 
-	createCmd.Flags().StringP("username", "u", "", "Username. Cannot be empty")
-	createCmd.Flags().StringP("password", "p", "", "Password. Cannot be empty")
+	createCmd.Flags().StringP("username", "u", "", "Username.")
+	createCmd.Flags().StringP("password", "p", "", "Password.")
 
-	signInCmd.Flags().StringP("username", "u", "", "Username. Cannot be empty")
-	signInCmd.Flags().StringP("password", "p", "", "Password. Cannot be empty")
+	createCmd.MarkFlagsRequiredTogether("username", "password")
 
-	signOutCmd.Flags().StringP("username", "u", "", "Username. Cannot be empty")
-	signOutCmd.Flags().StringP("password", "p", "", "Password. Cannot be empty")
+	signInCmd.Flags().StringP("username", "u", "", "Username.")
+	signInCmd.Flags().StringP("password", "p", "", "Password.")
 
-	retrieveCmd.Flags().StringP("username", "u", "", "Username. Cannot be empty")
+	signInCmd.MarkFlagsRequiredTogether("username", "password")
 
-	deleteCmd.Flags().StringP("username", "u", "", "Username. Cannot be empty")
-	deleteCmd.Flags().StringP("password", "p", "", "Password. Cannot be empty")
+	signOutCmd.Flags().StringP("username", "u", "", "Username.")
+	signOutCmd.Flags().StringP("password", "p", "", "Password.")
+
+	signOutCmd.MarkFlagsRequiredTogether("username", "password")
+
+	retrieveCmd.Flags().StringP("username", "u", "", "Username.")
+
+	retrieveCmd.MarkFlagRequired("username")
+
+	deleteCmd.Flags().StringP("username", "u", "", "Username.")
+	deleteCmd.Flags().StringP("password", "p", "", "Password.")
+
+	deleteCmd.MarkFlagsRequiredTogether("username", "password")
 
 }

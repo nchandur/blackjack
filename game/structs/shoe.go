@@ -1,4 +1,4 @@
-package game
+package structs
 
 import (
 	"fmt"
@@ -7,7 +7,6 @@ import (
 
 type Shoe map[Card]int
 
-// n represents the number of decks in the shoe
 func NewShoe(n int) Shoe {
 	shoe := make(map[Card]int)
 

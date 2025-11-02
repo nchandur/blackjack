@@ -7,36 +7,40 @@ import (
 	"os"
 	"strconv"
 	"strings"
+
+	"github.com/nchandur/blackjack/game/dealer"
+	"github.com/nchandur/blackjack/game/player"
+	"github.com/nchandur/blackjack/game/structs"
 )
 
 const SHOE_SIZE int = 6
 
 type Game struct {
-	Player
-	Dealer
-	Shoe
-	Rounds    int
-	Wins      int
-	Losses    int
-	Pushes    int
-	Kaasu int
+	player.Player
+	dealer.Dealer
+	structs.Shoe
+	Rounds int
+	Wins   int
+	Losses int
+	Pushes int
+	Kaasu  int
 }
 
 func NewGame() Game {
-	shoe := NewShoe(SHOE_SIZE)
+	shoe := structs.NewShoe(SHOE_SIZE)
 
-	player := Player{NewHand(&shoe)}
-	dealer := Dealer{NewHand(&shoe)}
+	player := player.Player{Hand: structs.NewHand(&shoe)}
+	dealer := dealer.Dealer{Hand: structs.NewHand(&shoe)}
 
 	return Game{
-		Player:    player,
-		Dealer:    dealer,
-		Shoe:      shoe,
-		Rounds:    0,
-		Wins:      0,
-		Losses:    0,
-		Pushes:    0,
-		Kaasu: 0,
+		Player: player,
+		Dealer: dealer,
+		Shoe:   shoe,
+		Rounds: 0,
+		Wins:   0,
+		Losses: 0,
+		Pushes: 0,
+		Kaasu:  0,
 	}
 
 }
@@ -85,7 +89,7 @@ func (g *Game) playRound() (string, error) {
 
 	fmt.Printf("Dealer Hand\n%s\n", strings.Join(g.Dealer.Hand[0].String(), "\n"))
 
-	action, bet := g.Player.Play(&g.Shoe, bet, g.Kaasu)
+	action, bet := g.Player.Play(reader, &g.Shoe, bet, g.Kaasu)
 
 	if action == "q" {
 		return action, nil
@@ -111,8 +115,8 @@ func (g *Game) playRound() (string, error) {
 
 	g.Rounds++
 
-	g.Player.Hand = NewHand(&g.Shoe)
-	g.Dealer.Hand = NewHand(&g.Shoe)
+	g.Player.Hand = structs.NewHand(&g.Shoe)
+	g.Dealer.Hand = structs.NewHand(&g.Shoe)
 
 	g.reset()
 
@@ -159,7 +163,7 @@ func (g *Game) reset() {
 	}
 
 	if float64(left)/float64(total) < 0.2 {
-		g.Shoe = NewShoe(SHOE_SIZE)
+		g.Shoe = structs.NewShoe(SHOE_SIZE)
 	}
 
 }
