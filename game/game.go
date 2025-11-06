@@ -68,7 +68,7 @@ func (g *Game) playRound() (string, error) {
 
 	reader := bufio.NewReader(os.Stdin)
 
-	fmt.Printf("You have %d kaasu.\nEnter bet amount: ", g.Kaasu)
+	fmt.Printf("--------------------------------New Round--------------------------------\nYou have %d kaasu.\nEnter bet amount: ", g.Kaasu)
 	input, _ := reader.ReadString('\n')
 
 	input = strings.Trim(input, "\n")
@@ -97,19 +97,19 @@ func (g *Game) playRound() (string, error) {
 
 	g.Dealer.Play(&g.Shoe)
 
-	fmt.Printf("Final\nDealer Hand\n%sPlayer Hand\n%s", g.Dealer.Hand.String(), g.Player.Hand.String())
+	fmt.Printf("--------------------------------Outcome--------------------------------\nDealer Hand: %d\n%sPlayer Hand: %d\n%s", g.Dealer.Hand.FindSum(), g.Dealer.Hand.String(), g.Player.Hand.FindSum(), g.Player.Hand.String())
 
 	switch g.outcome() {
 	case 1:
-		fmt.Printf("Player Won :)\n\n")
+		fmt.Printf("WON\n\n")
 		g.Wins++
 		g.Kaasu += bet
 	case -1:
-		fmt.Printf("Player Lost :(\n\n")
+		fmt.Printf("LOST\n\n")
 		g.Kaasu -= bet
 		g.Losses++
 	case 0:
-		fmt.Printf("Push\n\n")
+		fmt.Printf("PUSH\n\n")
 		g.Pushes++
 	}
 

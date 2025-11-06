@@ -10,8 +10,8 @@ type Card struct {
 
 func (c *Card) String() []string {
 	return []string{
-		"┌───┐",
+		"-----",
 		fmt.Sprintf("│%-2s%s│", c.Rank, c.Suit),
-		"└───┘",
+		"-----",
 	}
 }

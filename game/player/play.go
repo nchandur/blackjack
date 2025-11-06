@@ -14,7 +14,7 @@ func (p *Player) Play(reader *bufio.Reader, shoe *structs.Shoe, bet, funds int) 
 
 	for ok := true; ok; ok = !stop {
 
-		fmt.Printf("Player Hand\n%sSum: %d\n", p.Hand.String(), p.Hand.FindSum())
+		fmt.Printf("\nPlayer Hand: %d\n%s", p.Hand.FindSum(), p.Hand.String())
 
 		if len(p.Hand) == 2 && p.CheckBlackjack() {
 			bet = (bet) + (bet / 2)
