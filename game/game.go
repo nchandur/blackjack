@@ -83,6 +83,10 @@ func (g *Game) playRound() (string, error) {
 		return "q", fmt.Errorf("failed to play game: invalid bet amount: %v", err)
 	}
 
+	if bet == 0 {
+		return "q", fmt.Errorf("failed to play game: bet amount cannot be 0")
+	}
+
 	if bet > g.Kaasu {
 		return "q", fmt.Errorf("failed to play game: insufficient funds")
 	}
