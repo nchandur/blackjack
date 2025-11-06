@@ -47,9 +47,10 @@ func (h *Hand) String() string {
 		cardLines = append(cardLines, c.String())
 	}
 
-	for i := 0; i < len(cardLines[0]); i++ {
+	for i := range cardLines[0] {
 		for _, card := range cardLines {
 			builder.WriteString(card[i])
+			builder.WriteString("  ")
 		}
 		builder.WriteString("\n")
 	}
