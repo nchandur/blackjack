@@ -127,3 +127,24 @@ func (u UserManager) SignOut(username, password string) error {
 
 	return nil
 }
+
+func (u UserManager) Reset(username, password string) error {
+
+	success := false
+
+	for idx := range *(u.users) {
+
+		if (*(u.users))[idx].Username == username && (*(u.users))[idx].VerifyPassword(password) {
+			(*(u.users))[idx].Kaasu = users.BUY_IN
+			success = true
+		}
+
+	}
+
+	if !success {
+		return fmt.Errorf("username or password is incorrect")
+	}
+
+	return nil
+
+}

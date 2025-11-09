@@ -43,6 +43,7 @@ func init() {
 	userCmd.AddCommand(signOutCmd)
 	userCmd.AddCommand(retrieveCmd)
 	userCmd.AddCommand(deleteCmd)
+	userCmd.AddCommand(resetCmd)
 
 	gameCmd.AddCommand(playCmd)
 
@@ -69,5 +70,10 @@ func init() {
 	deleteCmd.Flags().StringP("password", "p", "", "Password.")
 
 	deleteCmd.MarkFlagsRequiredTogether("username", "password")
+
+	resetCmd.Flags().StringP("username", "u", "", "Username.")
+	resetCmd.Flags().StringP("password", "p", "", "Password.")
+
+	resetCmd.MarkFlagsRequiredTogether("username", "password")
 
 }

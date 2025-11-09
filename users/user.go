@@ -79,4 +79,5 @@ type UserManager interface {
 	Create(username, password string) error
 	Retrieve(username string) (User, error)
 	Delete(username, password string) error
+	Reset(username, password string) error
 }

@@ -180,3 +180,31 @@ Once deleted, all game history and statistics for that user are lost.`,
 		return nil
 	},
 }
+
+var resetCmd = &cobra.Command{
+	Use:   "reset",
+	Short: "Resets the amount of money for the user",
+	RunE: func(cmd *cobra.Command, args []string) error {
+
+		username, err := cmd.Flags().GetString("username")
+
+		if err != nil {
+			return err
+		}
+
+		password, err := cmd.Flags().GetString("password")
+
+		if err != nil {
+			return err
+		}
+
+		err = um.Reset(username, password)
+
+		if err != nil {
+			return err
+		}
+
+		fmt.Printf("%s has been successfully reset\n", username)
+		return nil
+	},
+}
