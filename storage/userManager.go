@@ -134,7 +134,7 @@ func (u UserManager) Reset(username, password string) error {
 
 	for idx := range *(u.users) {
 
-		if (*(u.users))[idx].Username == username && (*(u.users))[idx].VerifyPassword(password) {
+		if (*(u.users))[idx].Username == username && (*(u.users))[idx].VerifyPassword(password) && (*(u.users))[idx].Kaasu == 0 {
 			(*(u.users))[idx].Kaasu = users.BUY_IN
 			success = true
 		}
