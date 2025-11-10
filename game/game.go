@@ -108,18 +108,17 @@ func (g *Game) playRound() (string, error) {
 	fmt.Printf("--------------------------------Outcome--------------------------------\nDealer Hand: %d\n%sPlayer Hand: %d\n%s", g.Dealer.Hand.FindSum(), g.Dealer.Hand.String(), g.Player.Hand.FindSum(), g.Player.Hand.String())
 
 	switch g.outcome() {
-	case 1:
-		fmt.Printf("WON\n\n")
+	case "WON":
 		g.Stats.Wins++
 		g.Kaasu += bet
-	case -1:
-		fmt.Printf("LOST\n\n")
+	case "LOST":
 		g.Kaasu -= bet
 		g.Stats.Losses++
-	case 0:
-		fmt.Printf("PUSH\n\n")
+	case "PUSH":
 		g.Stats.Pushes++
 	}
+
+	fmt.Printf("%s\n\n", g.outcome())
 
 	g.Stats.Rounds++
 
@@ -132,33 +131,33 @@ func (g *Game) playRound() (string, error) {
 
 }
 
-func (g *Game) outcome() int32 {
+func (g *Game) outcome() string {
 
 	if g.Player.CheckBust() {
-		return -1
+		return "LOST"
 	}
 
 	if g.Dealer.CheckBust() {
-		return 1
+		return "WON"
 	}
 
 	if g.Player.FindSum() == g.Dealer.FindSum() {
-		return 0
+		return "PUSH"
 	}
 
 	if g.Player.CheckBlackjack() {
-		return 1
+		return "WON"
 	}
 
 	if g.Dealer.CheckBlackjack() {
-		return -1
+		return "LOST"
 	}
 
 	if g.Player.FindSum() > g.Dealer.FindSum() {
-		return 1
+		return "WON"
 	}
 
-	return -1
+	return "LOST"
 
 }
 
