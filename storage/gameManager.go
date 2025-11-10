@@ -30,10 +30,10 @@ func (g GameManager) Save(game game.Game) error {
 		return fmt.Errorf("please sign in")
 	}
 
-	(*g.users)[g.signedIn].Round.Played = game.Rounds
-	(*g.users)[g.signedIn].Round.Won = game.Wins
-	(*g.users)[g.signedIn].Round.Lost = game.Losses
-	(*g.users)[g.signedIn].Round.Pushed = game.Pushes
+	(*g.users)[g.signedIn].Stats.Played = game.Stats.Rounds
+	(*g.users)[g.signedIn].Stats.Wins = game.Stats.Wins
+	(*g.users)[g.signedIn].Stats.Losses = game.Stats.Losses
+	(*g.users)[g.signedIn].Stats.Pushes = game.Stats.Pushes
 	(*g.users)[g.signedIn].Kaasu = game.Kaasu
 
 	return nil
@@ -47,10 +47,10 @@ func (g GameManager) Load() (game.Game, error) {
 		return toLoad, fmt.Errorf("please sign in")
 	}
 
-	toLoad.Rounds = (*g.users)[g.signedIn].Round.Played
-	toLoad.Wins = (*g.users)[g.signedIn].Round.Won
-	toLoad.Losses = (*g.users)[g.signedIn].Round.Lost
-	toLoad.Pushes = (*g.users)[g.signedIn].Round.Pushed
+	toLoad.Stats.Rounds = (*g.users)[g.signedIn].Stats.Played
+	toLoad.Stats.Wins = (*g.users)[g.signedIn].Stats.Wins
+	toLoad.Stats.Losses = (*g.users)[g.signedIn].Stats.Losses
+	toLoad.Stats.Pushes = (*g.users)[g.signedIn].Stats.Pushes
 	toLoad.Kaasu = (*g.users)[g.signedIn].Kaasu
 
 	return toLoad, nil

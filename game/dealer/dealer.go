@@ -6,3 +6,6 @@ type Dealer struct {
 	structs.Hand
 }
 
+func NewDealer(shoe *structs.Shoe) Dealer {
+	return Dealer{Hand: structs.NewHand(shoe)}
+}

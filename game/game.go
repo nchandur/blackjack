@@ -19,28 +19,32 @@ type Game struct {
 	player.Player
 	dealer.Dealer
 	structs.Shoe
-	Rounds int
-	Wins   int
-	Losses int
-	Pushes int
-	Kaasu  int
+	Stats struct {
+		Rounds int
+		Wins   int
+		Losses int
+		Pushes int
+	}
+	Kaasu int
 }
 
 func NewGame() Game {
 	shoe := structs.NewShoe(SHOE_SIZE)
 
-	player := player.Player{Hand: structs.NewHand(&shoe)}
-	dealer := dealer.Dealer{Hand: structs.NewHand(&shoe)}
+	player := player.NewPlayer(&shoe)
+	dealer := dealer.NewDealer(&shoe)
 
 	return Game{
 		Player: player,
 		Dealer: dealer,
 		Shoe:   shoe,
-		Rounds: 0,
-		Wins:   0,
-		Losses: 0,
-		Pushes: 0,
-		Kaasu:  0,
+		Stats: struct {
+			Rounds int
+			Wins   int
+			Losses int
+			Pushes int
+		}{},
+		Kaasu: 0,
 	}
 
 }
@@ -106,18 +110,18 @@ func (g *Game) playRound() (string, error) {
 	switch g.outcome() {
 	case 1:
 		fmt.Printf("WON\n\n")
-		g.Wins++
+		g.Stats.Wins++
 		g.Kaasu += bet
 	case -1:
 		fmt.Printf("LOST\n\n")
 		g.Kaasu -= bet
-		g.Losses++
+		g.Stats.Losses++
 	case 0:
 		fmt.Printf("PUSH\n\n")
-		g.Pushes++
+		g.Stats.Pushes++
 	}
 
-	g.Rounds++
+	g.Stats.Rounds++
 
 	g.Player.Hand = structs.NewHand(&g.Shoe)
 	g.Dealer.Hand = structs.NewHand(&g.Shoe)

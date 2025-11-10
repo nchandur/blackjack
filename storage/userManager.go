@@ -14,27 +14,7 @@ func NewUserManager(users *[]users.User) UserManager {
 	return UserManager{users: users}
 }
 
-func (u UserManager) getHouseStats(use *[]users.User) users.User {
-	house := users.User{}
-
-	for _, u := range *use {
-		house.Round.Played += u.Played
-		house.Round.Lost += u.Won
-		house.Round.Won += u.Lost
-		house.Round.Pushed += u.Pushed
-		house.Kaasu += (users.BUY_IN - u.Kaasu)
-	}
-
-	house.Username = "house"
-	house.Password = ""
-	return house
-}
-
 func (u UserManager) Retrieve(username string) (users.User, error) {
-
-	if username == "house" {
-		return u.getHouseStats(u.users), nil
-	}
 
 	for _, play := range *(u.users) {
 		if play.Username == username {
