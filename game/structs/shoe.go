@@ -8,6 +8,11 @@ import (
 type Shoe map[Card]int
 
 func NewShoe(n int) Shoe {
+
+	if n < 1 {
+		n = 1
+	}
+
 	shoe := make(map[Card]int)
 
 	deck := NewDeck()
