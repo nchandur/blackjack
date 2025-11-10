@@ -1,8 +1,8 @@
 package entities
 
 type Stats struct {
-	Played int
-	Won    int
-	Lost   int
-	Pushed int
+	Played int `json:"played"`
+	Won    int `json:"won"`
+	Lost   int `json:"lost"`
+	Pushed int `json:"pushed"`
 }

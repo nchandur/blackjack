@@ -13,7 +13,7 @@ func (g *Game) Play() {
 	for {
 
 		fmt.Printf("----------------------------------New Round----------------------------------\n")
-		fmt.Printf("Enter bet amount: ")
+		fmt.Printf("You have %d kaasu.\nEnter bet amount: ", g.Player.Kaasu)
 		_, err := fmt.Scanln(&before)
 
 		if err != nil {

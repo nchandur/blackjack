@@ -15,7 +15,7 @@ type Game struct {
 }
 
 func NewGame() Game {
-	shoe := structs.NewShoe(6)
+	shoe := structs.NewShoe(SHOE_SIZE)
 
 	play := player.NewPlayer(&shoe)
 	deal := dealer.NewDealer(&shoe)
@@ -26,4 +26,3 @@ func NewGame() Game {
 		shoe:   &shoe,
 	}
 }
-

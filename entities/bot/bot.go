@@ -16,3 +16,15 @@ func NewBot(shoe *structs.Shoe) *Bot {
 		Hand: structs.NewHand(shoe),
 	}
 }
+
+func (b *Bot) Hit(shoe *structs.Shoe) {
+	(*b).Hand = append((*b).Hand, shoe.Draw())
+}
+
+func (b *Bot) CheckBlackjack() bool {
+	return b.Hand.FindSum() == 21
+}
+
+func (b *Bot) CheckBust() bool {
+	return b.Hand.FindSum() > 21
+}
