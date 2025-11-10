@@ -3,6 +3,7 @@ package cmd
 import (
 	"fmt"
 	"log"
+	"time"
 
 	"github.com/nchandur/blackjack/game"
 	"github.com/nchandur/blackjack/users"
@@ -19,7 +20,17 @@ var RootCmd = &cobra.Command{
 You can play against the dealer using standard Blackjack rules. 
 `,
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Printf(`Welcome to Blackjack CLI game!!!`)
+		var print = func(str string) {
+			for _, c := range str {
+				fmt.Printf("%c", c)
+				time.Sleep(20 * time.Millisecond)
+			}
+			fmt.Println()
+		}
+
+		print("=========================")
+		print("Welcome to Blackjack CLI")
+		print("=========================")
 
 		return nil
 	},

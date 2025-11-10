@@ -15,9 +15,6 @@ Use this command to create, sign in, sign out, view, or delete users.
 You must be signed in to play and record Blackjack stats.`,
 
 	RunE: func(cmd *cobra.Command, args []string) error {
-
-		fmt.Println("This is the User Management Section")
-
 		return nil
 	},
 }

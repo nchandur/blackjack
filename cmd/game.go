@@ -10,7 +10,6 @@ var gameCmd = &cobra.Command{
 	Use:   "game",
 	Short: "Play Blackjack",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		fmt.Println("This is the Game Area")
 		return nil
 	},
 }
