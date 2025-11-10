@@ -8,18 +8,18 @@ import (
 
 const BUY_IN int = 1000
 
-type Round struct {
+type Stats struct {
 	Played int `json:"played"`
-	Won    int `json:"won"`
-	Lost   int `json:"lost"`
-	Pushed int `json:"pushed"`
+	Wins   int `json:"won"`
+	Losses int `json:"lost"`
+	Pushes int `json:"pushed"`
 }
 
 type User struct {
 	Username string `json:"username"`
 	Password string
 	SignedIn bool `json:"signedIn"`
-	Round    `json:"rounds"`
+	Stats    `json:"stats"`
 	Kaasu    int `json:"kaasu"`
 }
 
@@ -35,7 +35,7 @@ func NewUser(username, password string) (User, error) {
 	user := User{
 		Username: username,
 		SignedIn: false,
-		Round:    Round{},
+		Stats:    Stats{},
 		Kaasu:    BUY_IN,
 	}
 
@@ -69,7 +69,7 @@ func (u User) VerifyPassword(password string) bool {
 
 func (u User) String() string {
 
-	return fmt.Sprintf("Username: %s\nSign In Status: %t\n\nStats: \nRounds Played: %d\nRounds Won: %d\nRounds Lost: %d\nRounds Pushed: %d\n\nKaasu: %d", u.Username, u.SignedIn, u.Played, u.Won, u.Lost, u.Pushed, u.Kaasu)
+	return fmt.Sprintf("Username: %s\nSign In Status: %t\n\nStats: \nRounds Played: %d\nRounds Won: %d\nRounds Lost: %d\nRounds Pushed: %d\n\nKaasu: %d", u.Username, u.SignedIn, u.Played, u.Wins, u.Losses, u.Pushes, u.Kaasu)
 
 }
 
