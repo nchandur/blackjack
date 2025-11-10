@@ -49,8 +49,8 @@ func (s *Storage) Load(players *[]users.User) error {
 	}
 
 	if len(fileData) == 0 {
-		*players = []users.User{}
-		return nil
+		*players = []users.User{{Username: "HOUSE", Password: "", SignedIn: false, Stats: entities.Stats{}, Kaasu: 0}}
+		return os.WriteFile(s.Filename, fileData, 0644)
 	}
 
 	if err := json.Unmarshal(fileData, players); err != nil {
