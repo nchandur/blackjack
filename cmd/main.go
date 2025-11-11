@@ -5,10 +5,13 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/nchandur/blackjack/cmd"
+	"github.com/nchandur/blackjack/game"
 	"github.com/nchandur/blackjack/storage"
 	"github.com/nchandur/blackjack/users"
 )
+
+var um users.UserManager
+var gm game.GameManager
 
 func main() {
 
@@ -28,10 +31,10 @@ func main() {
 		log.Fatal(err)
 	}
 
-	um := storage.NewUserManager(&uses)
-	gm := storage.NewGameManager(&uses)
+	um = storage.NewUserManager(&uses)
+	gm = storage.NewGameManager(&uses)
 
-	cmd.Execute(um, gm)
+	Execute()
 
 	store.Save(uses)
 }

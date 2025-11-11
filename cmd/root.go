@@ -1,17 +1,12 @@
-package cmd
+package main
 
 import (
 	"fmt"
 	"log"
 	"time"
 
-	"github.com/nchandur/blackjack/game"
-	"github.com/nchandur/blackjack/users"
 	"github.com/spf13/cobra"
 )
-
-var um users.UserManager
-var gm game.GameManager
 
 var RootCmd = &cobra.Command{
 	Use:   "blackjack",
@@ -36,9 +31,7 @@ You can play against the dealer using standard Blackjack rules.
 	},
 }
 
-func Execute(userManager users.UserManager, gameManager game.GameManager) {
-	um = userManager
-	gm = gameManager
+func Execute() {
 
 	if err := RootCmd.Execute(); err != nil {
 		log.Fatal(err)
