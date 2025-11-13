@@ -5,21 +5,9 @@ import (
 	"github.com/nchandur/blackjack/game/structs"
 )
 
-var ACTION_MAP = map[byte]uint16{
-	's': 0,
-	'h': 1,
-	'd': 2,
-}
-
-var REVERSE_ACTION_MAP = map[uint16]byte{
-	0: 's',
-	1: 'h',
-	2: 'd',
-}
-
 type Rule struct {
-	BotHand    uint16
-	DealerCard uint16
+	Hand       uint8
+	DealerCard uint8
 	IsSoft     bool
 	Action     byte
 }
