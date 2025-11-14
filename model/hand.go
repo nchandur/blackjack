@@ -1,4 +1,4 @@
-package structs
+package model
 
 import (
 	"strings"
@@ -12,30 +12,43 @@ func NewHand(shoe *Shoe) Hand {
 	hand = append(hand, shoe.Draw())
 	hand = append(hand, shoe.Draw())
 
-	hand.MakeOptimum()
-
 	return hand
 }
 
-func (h *Hand) FindSum() int {
-	sum := 0
+func (h *Hand) isSoft() bool {
+	for _, card := range *h {
+		if card.rank == "A" {
+			return true
+		}
+	}
+	return false
+}
+
+func (h *Hand) Sum() uint8 {
+	var sum uint8
 
 	for _, card := range *h {
-		sum += card.Value
+		sum += card.value
+	}
+
+	if sum > 21 && h.isSoft() {
+		sum -= 10
 	}
 
 	return sum
 
 }
 
-func (h *Hand) MakeOptimum() {
+func (h *Hand) Hit(shoe *Shoe) {
+	(*h) = append((*h), shoe.Draw())
+}
 
-	for idx := range *h {
-		if h.FindSum() > 21 && (*h)[idx].Rank == "A" {
-			(*h)[idx].Value = 1
-		}
-	}
+func (h *Hand) IsBlackjack() bool {
+	return h.Sum() == 21
+}
 
+func (h *Hand) IsBust() bool {
+	return h.Sum() > 21
 }
 
 func (h *Hand) String() string {
