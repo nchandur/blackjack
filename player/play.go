@@ -42,8 +42,8 @@ func (p *Player) Play(bet int64, shoe *model.Shoe) int64 {
 			if len(p.Hand) == 2 && p.Kaasu >= (2*bet) {
 				bet *= 2
 				p.Hit(shoe)
-				stop = true
 			}
+			stop = true
 		case "s", "stand":
 			stop = true
 		}

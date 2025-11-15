@@ -3,7 +3,7 @@ package model
 import "fmt"
 
 type Card struct {
-	value uint8
+	Value uint8
 	rank  string
 	suit  string
 }

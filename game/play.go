@@ -12,7 +12,7 @@ func (g *Game) Play() error {
 	for {
 
 		var bet int64
-		fmt.Printf("\n-----------------------------------------New Round-----------------------------------------\nYou have %d kaasu. Place your bet: ", g.Player.Kaasu)
+		fmt.Printf("\n-----------------------------------------New Round-----------------------------------------\nYou have %d kaasu.\nPlace your bet: ", g.Player.Kaasu)
 		_, err := fmt.Scanln(&bet)
 
 		if err != nil {
@@ -37,7 +37,7 @@ func (g *Game) Play() error {
 
 		after = g.Dealer.Play(after, &g.shoe)
 
-		fmt.Printf("\n------------------------------------------Outcome------------------------------------------\nDealer Hand: %d\n%s\nPlayer Hand: %d\n%s\n", g.Dealer.Sum(), g.Dealer.Hand.String(), g.Player.Sum(), g.Player.Hand.String())
+		fmt.Printf("\n------------------------------------------Outcome------------------------------------------\nDealer Hand: %d\n%s\nPlayer Hand: %d\n%s", g.Dealer.Sum(), g.Dealer.Hand.String(), g.Player.Sum(), g.Player.Hand.String())
 
 		switch g.isWinner() {
 		case 0:

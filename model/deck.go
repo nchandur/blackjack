@@ -9,7 +9,7 @@ func newDeck() []Card {
 
 	for i, rank := range ranks {
 		for _, suit := range []string{"C", "H", "S", "D"} {
-			card := Card{value: values[i], rank: rank, suit: suit}
+			card := Card{Value: values[i], rank: rank, suit: suit}
 			deck = append(deck, card)
 		}
 

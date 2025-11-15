@@ -15,7 +15,7 @@ func NewHand(shoe *Shoe) Hand {
 	return hand
 }
 
-func (h *Hand) isSoft() bool {
+func (h *Hand) IsSoft() bool {
 	for _, card := range *h {
 		if card.rank == "A" {
 			return true
@@ -28,10 +28,10 @@ func (h *Hand) Sum() uint8 {
 	var sum uint8
 
 	for _, card := range *h {
-		sum += card.value
+		sum += card.Value
 	}
 
-	if sum > 21 && h.isSoft() {
+	if sum > 21 && h.IsSoft() {
 		sum -= 10
 	}
 
