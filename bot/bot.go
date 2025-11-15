@@ -27,7 +27,7 @@ func NewBot(shoe *model.Shoe) *Bot {
 
 	}
 
-	return &Bot{Hand: model.NewHand(shoe), ruleset: ruleset, Kaasu: 100000}
+	return &Bot{Hand: model.NewHand(shoe), ruleset: ruleset, Kaasu: 1000}
 }
 
 func (b *Bot) LoadStrats(path string) error {
