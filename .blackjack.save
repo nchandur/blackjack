@@ -1,0 +1,14 @@
+[
+	{
+		"username": "HOUSE",
+		"Password": "",
+		"signedIn": false,
+		"stats": {
+			"Played": 0,
+			"Won": 0,
+			"Lost": 0,
+			"Pushed": 0
+		},
+		"kaasu": 0
+	}
+]
