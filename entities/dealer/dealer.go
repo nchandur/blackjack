@@ -1,20 +1,14 @@
 package dealer
 
-import (
-	"github.com/nchandur/blackjack/entities"
-	"github.com/nchandur/blackjack/game/structs"
-)
+import "github.com/nchandur/blackjack/model"
 
 type Dealer struct {
-	structs.Hand
-	Kaasu int
-	entities.Stats
+	model.Hand
+	model.Stats
+	Kaasu int64
 }
 
-func NewDealer(shoe *structs.Shoe) *Dealer {
-	dealer := Dealer{
-		Hand: structs.NewHand(shoe),
-	}
-
+func NewDealer(shoe *model.Shoe) *Dealer {
+	dealer := Dealer{Hand: model.NewHand(shoe)}
 	return &dealer
 }

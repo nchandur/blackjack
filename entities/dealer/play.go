@@ -1,22 +1,11 @@
 package dealer
 
-import "github.com/nchandur/blackjack/game/structs"
+import "github.com/nchandur/blackjack/model"
 
-func (d *Dealer) Play(shoe *structs.Shoe, bet int) int {
-
-	for d.FindSum() <= 17 {
-		if d.CheckBlackjack() {
-			break
-		}
-
-		if d.CheckBust() {
-			break
-		}
-
+func (d *Dealer) Play(bet int64, shoe *model.Shoe) int64 {
+	for d.Hand.Sum() < 17 {
 		d.Hit(shoe)
-
 	}
 
 	return bet
-
 }

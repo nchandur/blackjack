@@ -3,58 +3,57 @@ package player
 import (
 	"fmt"
 
-	"github.com/nchandur/blackjack/game/structs"
+	"github.com/nchandur/blackjack/model"
 )
 
-func (p *Player) Play(shoe *structs.Shoe, bet int) int {
+func (p *Player) Play(bet int64, shoe *model.Shoe) int64 {
+
+	if bet > p.Kaasu {
+		fmt.Println("insufficient funds")
+		return 0
+	}
 
 	stop := false
 
-	for ok := true; ok; ok = !stop {
+	for !stop {
 
-		fmt.Printf("\nPlayer Hand: %d\n%s", p.Hand.FindSum(), p.Hand.String())
+		fmt.Printf("Your hand: \n%s\nSum: %d\n", p.Hand.String(), p.Hand.Sum())
 
-		if len(p.Hand) == 2 && p.CheckBlackjack() {
-			bet = (bet) + (bet / 2)
+		if p.IsBlackjack() && len(p.Hand) == 2 {
+			return bet + (bet / 2)
+		}
+
+		if p.IsBlackjack() {
 			return bet
 		}
 
-		if p.CheckBlackjack() {
-			break
+		if p.IsBust() {
+			return bet
 		}
 
-		if p.CheckBust() {
-			break
-		}
-
+		var input string
 		fmt.Printf("Your move (h/s/d/q): ")
+		fmt.Scanln(&input)
 
-		ip := ""
-
-		_, err := fmt.Scanln(&ip)
-
-		if err != nil {
-			return 0
-		}
-
-		switch ip {
+		switch input {
 		case "h", "hit":
 			p.Hit(shoe)
+		case "d", "double":
+			if len(p.Hand) == 2 && p.Kaasu >= (2*bet) {
+				bet *= 2
+				p.Hit(shoe)
+			}
+			stop = true
 		case "s", "stand":
 			stop = true
-		case "d", "double":
-			if (len(p.Hand) == 2) && (2*bet < p.Kaasu) {
-				bet = 2 * bet
-				p.Hit(shoe)
-				stop = true
-			}
-		case "q", "quit":
-			return -1
-		default:
-			fmt.Println("invalid input")
+		}
+
+		if input == "q" {
+			return 0
 		}
 
 	}
 
 	return bet
+
 }

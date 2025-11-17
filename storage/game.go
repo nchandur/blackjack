@@ -24,7 +24,7 @@ func NewGameManager(users *[]users.User) GameManager {
 	return gameManager
 }
 
-func (g GameManager) Save(game game.Game) error {
+func (g GameManager) Save(game *game.Game) error {
 
 	if g.signedIn == -1 {
 		return fmt.Errorf("please sign in")
@@ -45,7 +45,7 @@ func (g GameManager) Save(game game.Game) error {
 	return nil
 }
 
-func (g GameManager) Load() (game.Game, error) {
+func (g GameManager) Load() (*game.Game, error) {
 
 	toLoad := game.NewGame()
 

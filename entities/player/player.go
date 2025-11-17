@@ -1,21 +1,16 @@
 package player
 
 import (
-	"github.com/nchandur/blackjack/entities"
-	"github.com/nchandur/blackjack/game/structs"
+	"github.com/nchandur/blackjack/model"
 )
 
 type Player struct {
-	structs.Hand
-	Kaasu int
-	entities.Stats
+	model.Hand
+	model.Stats
+	Kaasu int64
 }
 
-func NewPlayer(shoe *structs.Shoe) *Player {
-	player := Player{
-		Hand:  structs.NewHand(shoe),
-		Kaasu: 1000,
-	}
-
+func NewPlayer(shoe *model.Shoe) *Player {
+	player := Player{Hand: model.NewHand(shoe), Kaasu: 1000}
 	return &player
 }

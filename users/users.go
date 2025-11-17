@@ -3,18 +3,18 @@ package users
 import (
 	"fmt"
 
-	"github.com/nchandur/blackjack/entities"
+	"github.com/nchandur/blackjack/model"
 	"golang.org/x/crypto/bcrypt"
 )
 
-const BUY_IN int = 1000
+const BUY_IN int64 = 1000
 
 type User struct {
-	Username       string `json:"username"`
-	Password       string
-	SignedIn       bool `json:"signedIn"`
-	entities.Stats `json:"stats"`
-	Kaasu          int `json:"kaasu"`
+	Username    string `json:"username"`
+	Password    string
+	SignedIn    bool `json:"signedIn"`
+	model.Stats `json:"stats"`
+	Kaasu       int64 `json:"kaasu"`
 }
 
 func NewUser(username, password string) (User, error) {
