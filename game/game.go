@@ -1,9 +1,9 @@
 package game
 
 import (
-	"github.com/nchandur/blackjack/dealer"
+	"github.com/nchandur/blackjack/entities/dealer"
+	"github.com/nchandur/blackjack/entities/player"
 	"github.com/nchandur/blackjack/model"
-	"github.com/nchandur/blackjack/player"
 )
 
 type Game struct {
@@ -21,4 +21,9 @@ func NewGame() *Game {
 	game.Dealer = *dealer.NewDealer(&game.shoe)
 
 	return &game
+}
+
+type GameManager interface {
+	Save(game *Game) error
+	Load() (*Game, error)
 }

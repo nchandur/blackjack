@@ -1,6 +1,8 @@
 package simulator
 
-import "github.com/nchandur/blackjack/model"
+import (
+	"github.com/nchandur/blackjack/model"
+)
 
 func (s *Simulator) isWinner() int8 {
 	if s.Bot.Hand.IsBust() {
@@ -32,11 +34,12 @@ func (s *Simulator) isWinner() int8 {
 }
 
 func (s *Simulator) Simulate(rounds uint64) {
-	bet := int64(100)
+	initial := 1
+	bet := int64(initial)
 
-	count := uint64(0)
+	count := uint64(1)
 
-	for count < rounds {
+	for count <= rounds {
 
 		after := s.Bot.Play(bet, s.Dealer.Hand[0].Value, s.shoe)
 		after = s.Dealer.Play(after, s.shoe)
@@ -50,11 +53,13 @@ func (s *Simulator) Simulate(rounds uint64) {
 			s.Dealer.Kaasu -= after
 			s.Bot.Stats.Won++
 			s.Dealer.Stats.Lost++
+			bet = (bet) * (int64(count) % 4)
 		case -1:
 			s.Bot.Kaasu -= after
 			s.Dealer.Kaasu += after
 			s.Bot.Stats.Lost++
 			s.Dealer.Stats.Won++
+			bet = int64(initial)
 		}
 
 		s.Bot.Stats.Played++

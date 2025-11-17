@@ -3,8 +3,8 @@ package simulator
 import (
 	"fmt"
 
-	"github.com/nchandur/blackjack/bot"
-	"github.com/nchandur/blackjack/dealer"
+	"github.com/nchandur/blackjack/entities/bot"
+	"github.com/nchandur/blackjack/entities/dealer"
 	"github.com/nchandur/blackjack/model"
 )
 

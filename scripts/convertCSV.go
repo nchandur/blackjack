@@ -108,16 +108,23 @@ func writeBIN(path string, data [][][]uint8) error {
 
 func main() {
 
-	ruleset, err := readCSV("/home/chandur/workspace/goprojects/blackjack/files/strategy/enhc.csv")
+	strats := []string{"basic", "h17", "s17", "enhc"}
 
-	if err != nil {
-		log.Fatal(err)
-	}
+	for _, strat := range strats {
+		ruleset, err := readCSV(fmt.Sprintf("/home/chandur/workspace/goprojects/blackjack/files/strategy/%s.csv", strat))
 
-	err = writeBIN("/home/chandur/workspace/goprojects/blackjack/files/strategy/enhc.bin", ruleset)
+		if err != nil {
+			log.Fatal(err)
+		}
 
-	if err != nil {
-		log.Fatal(err)
+		err = writeBIN(fmt.Sprintf("/home/chandur/workspace/goprojects/blackjack/files/strategy/%s.bin", strat), ruleset)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Printf("%s.bin saved\n", strat)
+
 	}
 
 }
