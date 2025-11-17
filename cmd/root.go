@@ -32,7 +32,6 @@ You can play against the dealer using standard Blackjack rules.
 		print("======================")
 		print(" Welcome to Blackjack ")
 		print("======================")
-		print("1. Create user\n2. Play Blackjack\n3. Simulate Blackjack\n")
 
 		return nil
 	},
