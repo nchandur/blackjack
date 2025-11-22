@@ -20,3 +20,6 @@ install:
 uninstall:
 	rm -rf $(PREFIX)
 	sudo rm /usr/local/bin/blackjack
+
+update: install
+	git pull https://github.com/nchandur/blackjack.git
