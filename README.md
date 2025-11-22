@@ -21,6 +21,16 @@ After installation:
 * A directory named `blackjack` will be created in your home directory.
 * The executable will be installed to `/usr/local/bin`, allowing the `blackjack` command to be used system-wide.
 
+## Update
+To update the application, run:
+```
+make update
+```
+
+This will:
+
+* Replace the contents of the `blackjack` directory with the udpated game files.
+
 
 ## Uninstallation
 
