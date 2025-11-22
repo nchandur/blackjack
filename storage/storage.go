@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/nchandur/blackjack/entities"
+	"github.com/nchandur/blackjack/model"
 	"github.com/nchandur/blackjack/users"
 )
 
@@ -42,14 +42,14 @@ func (s *Storage) Load(players *[]users.User) error {
 
 			defer file.Close()
 
-			*players = []users.User{{Username: "HOUSE", Password: "", SignedIn: false, Stats: entities.Stats{}, Kaasu: 0}}
+			*players = []users.User{{Username: "HOUSE", Password: "", SignedIn: false, Stats: model.Stats{}, Kaasu: 0}}
 			return os.WriteFile(s.Filename, fileData, 0644)
 		}
 		return fmt.Errorf("failed to read file '%s': %w", s.Filename, err)
 	}
 
 	if len(fileData) == 0 {
-		*players = []users.User{{Username: "HOUSE", Password: "", SignedIn: false, Stats: entities.Stats{}, Kaasu: 0}}
+		*players = []users.User{{Username: "HOUSE", Password: "", SignedIn: false, Stats: model.Stats{}, Kaasu: 0}}
 		return os.WriteFile(s.Filename, fileData, 0644)
 	}
 

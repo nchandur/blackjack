@@ -1,4 +1,8 @@
 blackjack
 
 *.json
+<<<<<<< HEAD
 files/
+=======
+*.csv
+>>>>>>> origin/main

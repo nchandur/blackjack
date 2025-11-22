@@ -3,26 +3,27 @@ package game
 import (
 	"github.com/nchandur/blackjack/entities/dealer"
 	"github.com/nchandur/blackjack/entities/player"
-	"github.com/nchandur/blackjack/game/structs"
+	"github.com/nchandur/blackjack/model"
 )
 
-var SHOE_SIZE = 6
-
 type Game struct {
-	Player *player.Player
-	Dealer *dealer.Dealer
-	shoe   *structs.Shoe
+	player.Player
+	dealer.Dealer
+	shoe model.Shoe
 }
 
-func NewGame() Game {
-	shoe := structs.NewShoe(SHOE_SIZE)
-
-	play := player.NewPlayer(&shoe)
-	deal := dealer.NewDealer(&shoe)
-
-	return Game{
-		Player: play,
-		Dealer: deal,
-		shoe:   &shoe,
+func NewGame() *Game {
+	game := Game{
+		shoe: model.NewShoe(),
 	}
+
+	game.Player = *player.NewPlayer(&game.shoe)
+	game.Dealer = *dealer.NewDealer(&game.shoe)
+
+	return &game
+}
+
+type GameManager interface {
+	Save(game *Game) error
+	Load() (*Game, error)
 }
