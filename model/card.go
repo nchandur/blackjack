@@ -13,27 +13,16 @@ type Card struct {
 }
 
 // with colors
-// func (c *Card) String() []string {
-
-// 	if c.suit == "H" || c.suit == "D" {
-// 		return []string{
-// 			fmt.Sprintf("%s-----%s", RED, RESET),
-// 			fmt.Sprintf("%s│%-2s%s│%s", RED, c.rank, c.suit, RESET),
-// 			fmt.Sprintf("%s-----%s", RED, RESET),
-// 		}
-
-// 	}
-
-// 	return []string{
-// 		fmt.Sprintf("%s-----%s", BLACK, RESET),
-// 		fmt.Sprintf("%s│%-2s%s│%s", BLACK, c.rank, c.suit, RESET),
-// 		fmt.Sprintf("%s-----%s", BLACK, RESET),
-// 	}
-
-// }
-
-// without colors
 func (c *Card) String() []string {
+
+	if c.suit == "H" || c.suit == "D" {
+		return []string{
+			fmt.Sprintf("%s-----%s", RED, RESET),
+			fmt.Sprintf("%s│%-2s%s│%s", RED, c.rank, c.suit, RESET),
+			fmt.Sprintf("%s-----%s", RED, RESET),
+		}
+
+	}
 
 	return []string{
 		"-----",
@@ -42,3 +31,14 @@ func (c *Card) String() []string {
 	}
 
 }
+
+// without colors
+// func (c *Card) String() []string {
+
+// 	return []string{
+// 		"-----",
+// 		fmt.Sprintf("│%-2s%s│", c.rank, c.suit),
+// 		"-----",
+// 	}
+
+// }

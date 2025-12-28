@@ -23,3 +23,5 @@ uninstall:
 
 update: install
 	git pull https://github.com/nchandur/blackjack.git
+
+reinstall: uninstall install
